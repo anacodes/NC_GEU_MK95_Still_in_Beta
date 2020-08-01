@@ -43,3 +43,7 @@ class RegisterSerializer(serializers.ModelSerializer):
 
 class VerifyEmailSerializer(serializers.Serializer):
     token = serializers.CharField()
+
+
+class ResendEmailSerializer(serializers.Serializer):
+    email = serializers.EmailField(max_length=255)
