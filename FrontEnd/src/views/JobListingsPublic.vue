@@ -15,8 +15,29 @@
             </div>
             <div class="table-responsive col-md-12 col-lg-12 font-larger mx-0 px-0">
               <div class="mx-0">
-                
-                <!-- Main table element -->
+                <b-row class="mt-0 pt-0 justify-content-end adju">
+                  <b-form-group
+                    label
+                    label-cols-lg="12"
+                    label-align-sm="right"
+                    label-size="lg"
+                    label-for="filterInput"
+                    class="mb-4"
+                  >
+                    <b-input-group size="sm">
+                      <b-form-input
+                        v-model="filter"
+                        type="search"
+                        align="right"
+                        id="filterInput"
+                        placeholder="Type to Search"
+                      ></b-form-input>
+                      <b-input-group-append>
+                        <b-button :disabled="!filter" @click="filter = ''">Clear</b-button>
+                      </b-input-group-append>
+                    </b-input-group>
+                  </b-form-group>
+                </b-row>
                 <b-table
                   show-empty
                   small
@@ -32,6 +53,7 @@
                   :sort-direction="sortDirection"
                   @filtered="onFiltered"
                 >
+                  <!-- <template v-slot:cell(name)="row">{{ row.value.first }} {{ row.value.last }}</template> -->
                   <template v-slot:row-details="row">
                     <b-card>
                       <ul>
@@ -41,7 +63,11 @@
                   </template>
 
                   <template v-slot:cell(send)="send">
-                    
+                    <router-link
+                      :to="{ name: 'JobPublic', 
+                            params: { myJob: send.item.send}
+                          }"
+                    >
                       <b-button
                         size="md"
                         pill
@@ -51,7 +77,40 @@
                     </router-link>
                   </template>
                 </b-table>
-                
+                <b-row class="mt-3 pt-0 justify-content-end">
+                  <b-col sm="12" md="12" lg="12" xl="6" class="my-1">
+                    <b-form-group
+                      align="right"
+                      label="Entries"
+                      label-cols="6"
+                      label-cols-sm="6"
+                      label-cols-md="4"
+                      label-cols-lg="5"
+                      label-size="md"
+                      label-for="perPageSelect"
+                      class="mb-0"
+                    >
+                      <b-form-select
+                        v-model="perPage"
+                        id="perPageSelect"
+                        size="md"
+                        :options="pageOptions"
+                      ></b-form-select>
+                    </b-form-group>
+                  </b-col>
+                </b-row>
+                <b-row class="mt-2 pt-0 justify-content-center">
+                  <b-col sm="12" md="12" lg="12" xl="6" class="my-1">
+                    <b-pagination
+                      v-model="currentPage"
+                      :total-rows="totalRows"
+                      :per-page="perPage"
+                      align="center"
+                      size="md"
+                      class="my-0 justify-content-end"
+                    ></b-pagination>
+                  </b-col>
+                </b-row>
               </div>
             </div>
           </card>
@@ -61,62 +120,21 @@
   </div>
 </template>
 <script>
-// Tables
-import SocialTrafficTable from "./Dashboard/SocialTrafficTable";
-import PageVisitsTable from "./Dashboard/PageVisitsTable";
 export default {
   data() {
     return {
-      items: [{
-            id: '1524',
-            isActive: true,
-            age: 40,
-            title: 'Delhi Developer',
-            location: 'Mumbai',
-            applicants: '5000',
-            link: 'Check'
-          },
-          {
-            id: '1584',
-            isActive: false,
-            age: 21,
-            title: 'Yes Engineer',
-            location: 'Delhi',
-            applicants: '7000'
-          },
-          {
-            id: '1584',
-            isActive: false,
-            age: 9,
-            title: 'Cyber Security Expert',
-            name: {
-              first: 'Mini',
-              last: 'Navarro'
-            },
-            location: 'Mumbai',
-            applicants: '7800'
-          },
-          {
-            id: '1524',
-            isActive: false,
-            age: 89,
-            title: 'Cyber Security Expert',
-            location: 'Pune',
-            applicants: '7801'
-          },
-          {
-            id: '1314',
-            isActive: true,
-            age: 38,
-            title: 'Assistant',
-            location: 'Delhi',
-            applicants: '72'
-          },
-          ],
+      items: [],
       fields: [
         {
           key: "id",
           label: "Job ID",
+          sortable: true,
+          sortDirection: "asc",
+          class: "text-center"
+        },
+        {
+          key: "company",
+          label: "Company",
           sortable: true,
           sortDirection: "asc",
           class: "text-center"
@@ -137,13 +155,89 @@ export default {
           class: "text-center"
         },
         {
+          key: "deadline",
+          label: "Deadline",
+          sortable: true,
+          sortDirection: "asc",
+          class: "text-center"
+        },
+        {
           key: "send",
           label: "Details",
           class: "text-center"
         }
       ],
+      totalRows: 1,
+      currentPage: 1,
+      perPage: 25,
+      pageOptions: [25, 50, 100],
+      sortBy: "",
+      sortDesc: false,
+      sortDirection: "asc",
+      filter: null,
+      filterOn: [],
+      infoModal: {
+        id: "info-modal",
+        title: "",
+        content: ""
+      }
     };
   },
+  created() {
+    this.fetchData();
+  },
+  computed: {
+    sortOptions() {
+      return this.fields
+        .filter(f => f.sortable)
+        .map(f => {
+          return {
+            text: f.label,
+            value: f.key
+          };
+        });
+    }
+  },
+  mounted() {
+    this.totalRows = this.items.length;
+  },
+  methods: {
+    info(item, index, button) {
+      this.infoModal.title = `Row index: ${index}`;
+      this.infoModal.content = JSON.stringify(item, null, 2);
+      this.$root.$emit("bv::show::modal", this.infoModal.id, button);
+    },
+    resetInfoModal() {
+      this.infoModal.title = "";
+      this.infoModal.content = "";
+    },
+    onFiltered(filteredItems) {
+      // Trigger pagination to update the number of buttons/pages due to filtering
+      this.totalRows = filteredItems.length;
+      this.currentPage = 1;
+    },
+    fetchData() {
+      this.$store
+        .dispatch("PUBLICJOBS")
+        .then(success => {
+          console.log("fetch called");
+          for (var i = 0; i < success.length; i++) {
+            var arr = {};
+            arr.deadline = success[i].deadline;
+            arr.company = success[i].company.display_name;
+            arr.location = success[i].location;
+            arr.title = success[i].job_title;
+            arr.id = success[i].jobid;
+            arr.send = success[i];
+            this.items.push(arr);
+          }
+        })
+        .catch(error => {
+          console.log(error.data);
+          this.errors.push(error.data.detail);
+        });
+    }
+  }
 };
 </script>
 <style>
