@@ -13,9 +13,16 @@ Project work in fulfillment of Problem Statement : MK95 (Smart Job Application p
 |3.| Yashohan Agnihotri      | [zappelectro](https://www.github.com/zappelectro) | yashogun@gmail.com         | Frontend UI development |
 |3.| Abhishek Jugdar       | [abhishekjugdar](https://www.github.com/abhishekjugdar) | ajugdar5@gmail.com         | Summarisation Engine |
 
+*TL - Team Leader*
+
 ### Day 1 : 
 #### Progress (2 pm)
  * User profile model added on backend.
  * Register and login view completed on Backend.
  * Tested Home view (will soon be pushed to repo).
  * Added DateExtract function in summarisation Engine.
+#### Progress 4 pm)
+ * Home View, Profiles and Profile Completion View added.
+ * Verify email and resend email API added.
+ * Added VacancyExtract code in summarisation Engine.
+ * Added vue.config.js file which contains configuration for added dependencies.
