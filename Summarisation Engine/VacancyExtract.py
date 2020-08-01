@@ -28,9 +28,15 @@ def chkVac(s):
                 if prev.isdigit() and nxt.isdigit():
                     return prev + '-' + nxt   
 
+    # To handle cases like xxx
+    for x in s:                  
+        if x[-1] == '.' or x[-1] == ',':
+            x = x[0:-1]
+
+        if x.isdigit():
+            return x    
 
     ## Remaining cases to handle :-
-    # To handle cases like xxx
     # To handle cases like vacancy-xxxx
 
 
