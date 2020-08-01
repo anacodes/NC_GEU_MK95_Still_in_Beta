@@ -1,9 +1,18 @@
 from django.shortcuts import render
 from rest_framework import generics, status, permissions
-from rest_framework.response import Response
 from rest_framework_simplejwt.tokens import RefreshToken
+from rest_framework.response import Response
+from rest_framework_simplejwt.token_blacklist.models import BlacklistedToken, OutstandingToken
+from rest_framework_simplejwt.utils import aware_utcnow
 from . import serializers, models, utils
+from django.contrib.sites.shortcuts import get_current_site
+from django.urls import reverse
+import jwt
 from django.conf import settings
+import datetime
+from django.contrib.auth.tokens import PasswordResetTokenGenerator
+from django.utils.encoding import smart_str, force_str, smart_bytes, DjangoUnicodeDecodeError
+from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 
 
 # Create your views here.
