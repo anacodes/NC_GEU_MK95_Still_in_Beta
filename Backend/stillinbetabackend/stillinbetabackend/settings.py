@@ -28,6 +28,8 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
+AUTH_USER_MODEL = 'authentication.UserProfile'
+
 # Application definition
 
 INSTALLED_APPS = [
@@ -56,7 +58,7 @@ MIDDLEWARE = [
     'django.middleware.common.CommonMiddleware',
 ]
 
-ROOT_URLCONF = 'sihsibapi.urls'
+ROOT_URLCONF = 'stillinbetabackend.urls'
 
 TEMPLATES = [
     {
