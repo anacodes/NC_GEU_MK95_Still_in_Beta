@@ -26,3 +26,8 @@ Project work in fulfillment of Problem Statement : MK95 (Smart Job Application p
  * Verify email and resend email API added.
  * Added VacancyExtract code in summarisation Engine.
  * Added vue.config.js file which contains configuration for added dependencies.
+#### Progress (8 pm)
+ * Updated VacancyExtract.py in Summarisation Engine
+ * Login and Reset Password Functionality added at backend.
+ * Added Joblistings Page.
+ * Added necessary components for building Dashboard (Dashboard soon to be pushed).
