@@ -21,7 +21,7 @@ Project work in fulfillment of Problem Statement : MK95 (Smart Job Application p
  * Register and login view completed on Backend.
  * Tested Home view (will soon be pushed to repo).
  * Added DateExtract function in summarisation Engine.
-#### Progress 4 pm)
+#### Progress (4 pm)
  * Home View, Profiles and Profile Completion View added.
  * Verify email and resend email API added.
  * Added VacancyExtract code in summarisation Engine.
