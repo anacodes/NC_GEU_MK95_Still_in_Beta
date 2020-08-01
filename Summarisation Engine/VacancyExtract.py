@@ -15,12 +15,23 @@ def chkVac(s):
                 return x
 
 
-    ## Remaining cases to handle :-
-
     # To handle cases like xxxx - yyyy
+    for i in range(len(s)):       
+        if s[i] == '-':
+            if i > 0 and i + 1 < len(s):
+                prev = s[i - 1]
+                nxt = s[i + 1]
+
+                if nxt[-1] == '.' or nxt[-1] == ',':
+                    nxt = nxt[0:-1]
+
+                if prev.isdigit() and nxt.isdigit():
+                    return prev + '-' + nxt   
+
+
+    ## Remaining cases to handle :-
     # To handle cases like xxx
     # To handle cases like vacancy-xxxx
-
 
 
     # Salary not found
