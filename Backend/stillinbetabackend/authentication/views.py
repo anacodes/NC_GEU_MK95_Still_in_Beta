@@ -92,3 +92,29 @@ class ResendEmail(generics.GenericAPIView):
         except:
             return Response({'error': 'Email ID not found'},
                             status=status.HTTP_400_BAD_REQUEST)
+
+
+class LoginAPIView(generics.GenericAPIView):
+    permission_classes = (permissions.AllowAny, )
+    serializer_class = serializers.LoginSerializer
+
+    def post(self, request):
+        serializer = self.serializer_class(data=request.data)
+        serializer.is_valid(raise_exception=True)
+
+        return Response(serializer.data, status=status.HTTP_200_OK)
+
+
+class LogoutAPIView(generics.GenericAPIView):
+    def post(self, request):
+        try:
+            refresh_token = request.data['refresh_token']
+            token = RefreshToken(refresh_token)
+            token.blacklist()
+            OutstandingToken.objects.filter(
+                expires_at__lte=aware_utcnow()).delete()
+            # BlacklistedToken.objects.all().delete()
+            return Response(status=status.HTTP_205_RESET_CONTENT)
+        except Exception as e:
+            return Response({"error": "Logged out"},
+                            status=status.HTTP_400_BAD_REQUEST)
