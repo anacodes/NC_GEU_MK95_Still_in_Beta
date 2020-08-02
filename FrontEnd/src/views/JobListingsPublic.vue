@@ -1,6 +1,7 @@
 <template>
   <div>
     <!-- card start -->
+
     <div>
       <div class="row">
         <div class="col-xl-12 order-xl-2 mb-5 mb-xl-0 mx-auto">
@@ -37,10 +38,11 @@
                       </b-input-group-append>
                     </b-input-group>
                   </b-form-group>
+                  <!-- </b-col> -->
                 </b-row>
+                <!-- Main table element -->
                 <b-table
                   show-empty
-                  small
                   stacked="md"
                   :items="items"
                   :fields="fields"
@@ -63,6 +65,7 @@
                   </template>
 
                   <template v-slot:cell(send)="send">
+                    <!-- add function -->
                     <router-link
                       :to="{ name: 'JobPublic', 
                             params: { myJob: send.item.send}
@@ -111,6 +114,10 @@
                     ></b-pagination>
                   </b-col>
                 </b-row>
+                <!-- Info modal -->
+                <b-modal :id="infoModal.id" :title="infoModal.title" ok-only @hide="resetInfoModal">
+                  <pre>{{ infoModal.content }}</pre>
+                </b-modal>
               </div>
             </div>
           </card>
@@ -120,6 +127,9 @@
   </div>
 </template>
 <script>
+// Tables
+import SocialTrafficTable from "./Dashboard/SocialTrafficTable";
+import PageVisitsTable from "./Dashboard/PageVisitsTable";
 export default {
   data() {
     return {
@@ -140,8 +150,22 @@ export default {
           class: "text-center"
         },
         {
+          key: "domain",
+          label: "Domain",
+          sortable: true,
+          sortDirection: "asc",
+          class: "text-center"
+        },
+        {
           key: "title",
           label: "Job Title",
+          sortable: true,
+          sortDirection: "asc",
+          class: "text-center"
+        },
+        {
+          key: "jobtype",
+          label: "Job Type",
           sortable: true,
           sortDirection: "asc",
           class: "text-center"
@@ -184,10 +208,12 @@ export default {
     };
   },
   created() {
+    // console.log("created call");
     this.fetchData();
   },
   computed: {
     sortOptions() {
+      // Create an options list from our fields
       return this.fields
         .filter(f => f.sortable)
         .map(f => {
@@ -199,6 +225,7 @@ export default {
     }
   },
   mounted() {
+    // Set the initial number of items
     this.totalRows = this.items.length;
   },
   methods: {
@@ -221,6 +248,7 @@ export default {
         .dispatch("PUBLICJOBS")
         .then(success => {
           console.log("fetch called");
+          // console.log(success);
           for (var i = 0; i < success.length; i++) {
             var arr = {};
             arr.deadline = success[i].deadline;
@@ -229,6 +257,8 @@ export default {
             arr.title = success[i].job_title;
             arr.id = success[i].jobid;
             arr.send = success[i];
+            arr.domain = success[i].domain;
+            arr.jobtype = success[i].job_type;
             this.items.push(arr);
           }
         })
@@ -265,5 +295,8 @@ h2 {
 .black {
   color: #525f7f;
   border-color: #525f7f;
+}
+.container {
+  padding: 0px;
 }
 </style>
