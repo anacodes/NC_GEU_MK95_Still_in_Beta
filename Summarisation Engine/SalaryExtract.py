@@ -64,7 +64,7 @@ def getSalary(s, d):
     return ''
     
 
-l = ['rs.', 'rs', '₹', '$', 'lakh', 'crore', 'thousand', 'lakhs', 'crores', 'thousands', 'lpa', 'ctc']
+l = ['rs.', 'rs', '₹', '$', 'lakh', 'lac', 'crore', 'thousand', 'lakhs', 'lacs', 'crores', 'thousands', 'lpa', 'ctc']
 
 d = {}
 for x in l:
