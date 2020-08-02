@@ -26,9 +26,9 @@ def chkVac(s):
                     nxt = nxt[0:-1]
 
                 if prev.isdigit() and nxt.isdigit():
-                    return prev + '-' + nxt   
+                    return prev + '-' + nxt    
 
-    # To handle cases like xxx
+     # To handle cases like xxx
     for x in s:                  
         if x[-1] == '.' or x[-1] == ',':
             x = x[0:-1]
@@ -36,16 +36,12 @@ def chkVac(s):
         if x.isdigit():
             return x    
 
-    ## Remaining cases to handle :-
-    # To handle cases like vacancy-xxxx
-
-
     # Salary not found
     return ''                     
 
 
  
-def getVacancy(s, d):
+def getVac(s, d):
     s = s.lower()
     l = s.split()
 
@@ -60,15 +56,12 @@ def getVacancy(s, d):
 
     return ''
 
-s = input()
 
-l = ['vacancy', 'vacancies', 'opening', 'openings', 'post', 'posts', 'opportunity', 'opportunities', 'position', 'positions']
-d = {}
-for x in l:
-    d[x] = 1
+def getVacancy(s):
+    l = ['vacancy', 'vacancies', 'opening', 'openings', 'post', 'posts', 'opportunity', 'opportunities', 'position', 'positions']
+    d = {}
+    for x in l:
+        d[x] = 1
 
-resVac = getVacancy(s, d)
-if resVac == '':
-    print("Vacancy information not found")
-else:
-    print(resVac)
+    resVacancy = getVac(s, d)
+    return resVacancy

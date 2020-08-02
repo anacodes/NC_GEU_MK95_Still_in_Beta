@@ -48,10 +48,10 @@ def chkSalary(s, d):
             if len(salary) > 0:
                 salary += s[i] + ' '
 
-    # Need to add cases where there are no spaces present between, like, Rs.xxx, Rs. xxx-yyy            
+    # Need to add cases where there are no spaces present between like, Rs.xxx, Rs. xxx-yyy            
     return salary[0:-1]
 
-def getSalary(s, d):
+def getSal(s, d):
     s = s.lower()
     l = s.split()
     
@@ -63,17 +63,12 @@ def getSalary(s, d):
             
     return ''
     
+def getSalary(s):
+    l = ['rs.', 'rs', '₹', '$', 'lakh', 'lac', 'crore', 'thousand', 'lakhs', 'lacs', 'crores', 'thousands', 'lpa', 'ctc']
 
-l = ['rs.', 'rs', '₹', '$', 'lakh', 'lac', 'crore', 'thousand', 'lakhs', 'lacs', 'crores', 'thousands', 'lpa', 'ctc']
+    d = {}
+    for x in l:
+        d[x] = 1
 
-d = {}
-for x in l:
-    d[x] = 1
-
-s = input()
-resSalary = getSalary(s, d)
-
-if resSalary == '' or resSalary in d:
-    print('No salary found mentioned in the job description')
-else:
-    print(resSalary)
+    resSalary = getSal(s, d)
+    return resSalary
