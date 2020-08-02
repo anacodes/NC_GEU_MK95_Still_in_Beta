@@ -1,8 +1,24 @@
 from django.db import models
 
-<<<<<<< Updated upstream
 # Create your models here.
-=======
+from authentication.models import UserProfile
+import hashlib
+# Create your models here.
+
+
+def recruiter_logo(instance, filename):
+    # file will be uploaded to MEDIA_ROOT/user_<id>/<filename>
+    encoded = hashlib.sha256(instance.user.name.replace(" ", "").encode())
+    if len(encoded.hexdigest()) > 20:
+        return 'recruiter/static/image/user/{0}{1}/{2}'.format(
+            instance.user.id,
+            encoded.hexdigest()[:20], filename)
+    else:
+        return 'recruiter/static/image/user/{0}{1}/{2}'.format(
+            instance.user.id, encoded.hexdigest(), filename)
+
+
+
 class Recruiter(models.Model):
     address_line1 = models.CharField(max_length=40)
     address_line2 = models.CharField(blank=True, max_length=40)
@@ -23,7 +39,6 @@ class Recruiter(models.Model):
     def __str__(self):
         """Return String representation of user"""
         return self.user.name
-
 
 def recruiter_jd(instance, filename):
     # file will be uploaded to MEDIA_ROOT/user_<id>/<filename>
@@ -59,4 +74,3 @@ class JobCreation(models.Model):
     def __str__(self):
         """Job Creation Company Name"""
         return self.company.user.name
->>>>>>> Stashed changes

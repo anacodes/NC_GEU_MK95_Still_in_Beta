@@ -7,23 +7,48 @@ def chkSalary(s, d):
         no[x] = 1
     
     for i in range(len(s)):
+        if s[i][-1] == '.':
+            s[i] = s[i][0:-1]
+
         if s[i] in d:
             if s[i] not in no:
                 salary += s[i] + ' '
-
-        elif s[i][0:-1] in d:
-            if s[i][0:-1] not in no:
-                salary += s[i][0:-1] + ' '
                 
         elif s[i].isdigit():
             salary += s[i] + ' '
+
+        elif s[i].find('.') != -1 and s[i].find('.') != 0:
+            ok = True
+            for x in s[i]:
+                if x.isdigit() == False and x != '.':
+                    ok = False
+                    
+            if ok:
+                salary += s[i] + ' '
+
+        elif s[i].find(',') != -1 and s[i].find(',') != 0:
+            ok = True
+            for x in s[i]:
+                if x.isdigit() == False and x != ',':
+                    ok = False
+                    
+            if ok:
+                salary += s[i] + ' '
+
+        elif s[i].find('-') != -1 and s[i].find('-') != 0:
+            ok = True
+            for x in s[i]:
+                if x.isdigit() == False and x != '-':
+                    ok = False
+                    
+            if ok:
+                salary += s[i] + ' '
             
         elif s[i] == '-':
             if len(salary) > 0:
                 salary += s[i] + ' '
 
-    #Need to add cases where word ends with '.', ',', '-' and handle some ranges better
-                    
+    # Need to add cases where there are no spaces present between, like, Rs.xxx, Rs. xxx-yyy            
     return salary[0:-1]
 
 def getSalary(s, d):
@@ -39,7 +64,7 @@ def getSalary(s, d):
     return ''
     
 
-l = ['rs.', 'rs', '₹', '$', 'lakh', 'crore', 'thousand', 'lakhs', 'crores', 'thousands', 'lpa', 'ctc']
+l = ['rs.', 'rs', '₹', '$', 'lakh', 'lac', 'crore', 'thousand', 'lakhs', 'lacs', 'crores', 'thousands', 'lpa', 'ctc']
 
 d = {}
 for x in l:

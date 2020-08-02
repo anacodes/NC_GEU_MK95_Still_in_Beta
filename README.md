@@ -31,3 +31,11 @@ Project work in fulfillment of Problem Statement : MK95 (Smart Job Application p
  * Login and Reset Password Functionality added at backend.
  * Added Joblistings Page.
  * Added necessary components for building Dashboard (Dashboard soon to be pushed).
+ 
+### Day 2 : 
+#### Progress (10 am)
+ * Added Applicant model and userprofile to Backend.
+ * Added Dashboard vue to frontend.
+ * Added routing calls.
+ * Added essential plugins for UI.
+ * Updated SalaryExtract function in summarisation Engine
