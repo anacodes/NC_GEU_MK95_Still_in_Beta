@@ -92,3 +92,19 @@ class JobCreationRegisterDetailListAPIView(
     def get_queryset(self):
         return self.queryset.filter(company=models.Recruiter.objects.get(
             user=self.request.user))
+
+
+class JobListAPIView(generics.ListAPIView):
+    """
+    Job Listing for Non Authenticated User
+    """
+    parser_classes = (MultiPartParser, FormParser)
+    serializer_class = serializers.JobListingSerializer
+    permission_classes = (permissions.AllowAny, )
+    queryset = models.JobCreation.objects.filter(activate=True).filter(
+        status=True)
+
+    def get_object(self):
+        queryset = self.get_queryset()
+        obj = get_object_or_404(queryset)
+        return obj
