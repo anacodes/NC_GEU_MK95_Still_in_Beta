@@ -18,7 +18,6 @@ def recruiter_logo(instance, filename):
             instance.user.id, encoded.hexdigest(), filename)
 
 
-
 class Recruiter(models.Model):
     address_line1 = models.CharField(max_length=40)
     address_line2 = models.CharField(blank=True, max_length=40)
@@ -39,6 +38,7 @@ class Recruiter(models.Model):
     def __str__(self):
         """Return String representation of user"""
         return self.user.name
+
 
 def recruiter_jd(instance, filename):
     # file will be uploaded to MEDIA_ROOT/user_<id>/<filename>
@@ -74,3 +74,10 @@ class JobCreation(models.Model):
     def __str__(self):
         """Job Creation Company Name"""
         return self.company.user.name
+
+
+class ExtractJD(models.Model):
+    user = models.OneToOneField(to=UserProfile,
+                                on_delete=models.CASCADE,
+                                primary_key=True)
+    jd = models.FileField(upload_to=recruiter_jd_extract)
