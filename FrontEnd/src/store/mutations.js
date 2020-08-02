@@ -6,7 +6,7 @@ export default {
         state.auth.status = 'loading'
     },
 
-    auth_success(state, { token, rtoken, name, email, registered, is_recruiter }) {
+    auth_success(state, {token, rtoken, name, email, registered, is_recruiter}) {
         state.auth.status = 'success'
         state.auth.token = token
         state.auth.refresh_token = rtoken
