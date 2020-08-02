@@ -8,7 +8,7 @@ Project work in fulfillment of Problem Statement : MK95 (Smart Job Application p
 |------|------------------|-------------------------------------------|------------------------------|-----------|
 |1.| Darshan Lokhande | [darshancool25](https://www.github.com/darshancool25) | lokhande.darshan25@gmail.com | Summarisation Engine , Frontend |
 |2.| Anagha Ajnadkaar (TL)  | [anacodes](https://www.github.com/anacodes)   | anaghaajnadkar@gmail.com       | Frontend Content Development |
-|3.| Aditya Joshi     | [aadityajo](https://www.github.com/aadityajo) | aadityajoshi2699@gmail.com         | Backend Development |
+|3.| Aaditya Joshi     | [aadityajo](https://www.github.com/aadityajo) | aadityajoshi2699@gmail.com         | Backend Development |
 |4.| Aditya Raut      | [adityaraut10](https://www.github.com/adityaraut10) | rautaditya1010@gmail.com         | Backend & Frontend Integration |
 |5.| Yashodhan Agnihotri      | [zappelectro](https://www.github.com/zappelectro) | yashogun@gmail.com         | Frontend UI development |
 |6.| Abhishek Jugdar       | [abhishekjugdar](https://www.github.com/abhishekjugdar) | ajugdar5@gmail.com         | Summarisation Engine |
