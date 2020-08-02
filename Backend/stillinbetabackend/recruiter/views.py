@@ -1,12 +1,24 @@
-from django.shortcuts import render
 from django.shortcuts import render, get_object_or_404
 from rest_framework import generics, status, permissions
 from rest_framework.response import Response
 from authentication.models import UserProfile
+from applicants.models import JobApplied
 from . import models, serializers
 from .permission import IsRecruiter, IsOwner, IsSameCompany, IsActive, IsStatus
 from rest_framework.parsers import MultiPartParser, FormParser
+from . import code
 # Create your views here.
+
+
+class ShowCompanyProfileAPIView(generics.RetrieveAPIView):
+    """
+    API For Displaying Company Profile
+    """
+    parser_classes = (MultiPartParser, FormParser)
+    permission_classes = (permissions.AllowAny, )
+    serializer_class = serializers.ShowCompanyProfileSerializer
+    queryset = models.Recruiter.objects.all()
+    lookup_field = "display_name"
 
 
 class RecruiterRegisterListAPIView(generics.ListCreateAPIView):
@@ -94,6 +106,15 @@ class JobCreationRegisterDetailListAPIView(
             user=self.request.user))
 
 
+# class JobDeletionAPIView(generics.DestroyAPIView):
+#     parser_classes = (MultiPartParser, FormParser)
+#     serializer_class = serializers.JobCreationSerializer
+#     permission_classes = (permissions.IsAuthenticated, IsRecruiter,
+#                           IsSameCompany, IsStatus)
+#     queryset = models.JobCreation.objects.all()
+#     lookup_field = "jobid"
+
+
 class JobListAPIView(generics.ListAPIView):
     """
     Job Listing for Non Authenticated User
@@ -135,3 +156,23 @@ class JobApplicantsAndStatusUpdateAPIView(generics.RetrieveUpdateAPIView):
     serializer_class = serializers.JobApplicantUpdateSerializer
     queryset = JobApplied.objects.all()
     lookup_field = "job_applied_id"
+
+
+class ExtractJDAPIView(generics.GenericAPIView):
+    parser_classes = (MultiPartParser, FormParser)
+    permission_classes = (permissions.IsAuthenticated, IsRecruiter)
+    serializer_class = serializers.ExtractJobDetailsSerializer
+
+    def post(self, request):
+        serializer = self.serializer_class(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        user_data = serializer.validated_data
+        jd_save = models.ExtractJD.objects.create(user=self.request.user,
+                                                  jd=user_data['jd'])
+        # x[0].jd.url
+        file_type = jd_save.jd.url.split('.')[1]
+        file_path = jd_save.jd.url
+        file_path = '..' + file_path
+        code.extract_jd(file_type, file_path)
+        models.ExtractJD.objects.filter(user=self.request.user).delete()
+        return Response({"success": "OK"}, status=status.HTTP_200_OK)

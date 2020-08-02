@@ -4,6 +4,21 @@ from authentication.models import UserProfile
 from applicants.models import JobApplied, Applicant
 
 
+class ShowCompanyProfileNameEmailSerializer(serializers.ModelSerializer):
+    class Meta():
+        model = UserProfile
+        fields = ('email', 'name')
+
+
+class ShowCompanyProfileSerializer(serializers.ModelSerializer):
+    user = ShowCompanyProfileNameEmailSerializer()
+
+    class Meta():
+        model = Recruiter
+        fields = ('user', 'address_line1', 'address_line2', 'mobile_number',
+                  'website', 'logo', 'bio')
+
+
 class RecruiterSerializer(serializers.ModelSerializer):
     class Meta():
         model = Recruiter
@@ -71,3 +86,15 @@ class JobApplicantsSerializer(serializers.ModelSerializer):
         fields = ('status', 'applicant', 'job_applied_id')
 
     depth = 1
+
+
+class JobApplicantUpdateSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = JobApplied
+        fields = ('status', )
+
+
+class ExtractJobDetailsSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = ExtractJD
+        fields = ('jd', )

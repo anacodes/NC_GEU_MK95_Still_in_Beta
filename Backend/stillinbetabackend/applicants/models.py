@@ -2,6 +2,7 @@ from django.db import models
 import random
 import string
 from authentication.models import UserProfile
+from recruiter.models import JobCreation
 import hashlib
 # Create your models here.
 

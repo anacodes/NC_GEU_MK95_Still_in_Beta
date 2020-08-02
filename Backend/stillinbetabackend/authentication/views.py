@@ -13,9 +13,9 @@ import datetime
 from django.contrib.auth.tokens import PasswordResetTokenGenerator
 from django.utils.encoding import smart_str, force_str, smart_bytes, DjangoUnicodeDecodeError
 from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
-
-
 # Create your views here.
+
+
 class RegisterView(generics.GenericAPIView):
     permission_classes = (permissions.AllowAny, )
     serializer_class = serializers.RegisterSerializer
@@ -41,6 +41,7 @@ class RegisterView(generics.GenericAPIView):
         }
 
         utils.Util.send_email(data)
+
         return Response(user_data, status=status.HTTP_201_CREATED)
 
 
@@ -67,6 +68,8 @@ class VerifyEmail(generics.GenericAPIView):
         except:
             return Response({'error': 'Invalid Token'},
                             status=status.HTTP_400_BAD_REQUEST)
+
+    # jwt.exceptions.DecodeError as identifier
 
 
 class ResendEmail(generics.GenericAPIView):
@@ -198,3 +201,10 @@ class SetNewPassword(generics.GenericAPIView):
                 'message': 'Password Reset Successfully.'
             },
             status=status.HTTP_200_OK)
+
+
+# Just a checker for authorization
+# class TrialApi(generics.GenericAPIView):
+
+#     def get(self,request,format=None):
+#         return Response({"Hi":"There"},status=status.HTTP_200_OK)
