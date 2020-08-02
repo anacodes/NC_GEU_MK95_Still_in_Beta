@@ -54,3 +54,41 @@ class RecruiterRegisterDetailAPIView(generics.RetrieveUpdateAPIView):
 
     def get_queryset(self):
         return self.queryset.filter(user=self.request.user)
+
+
+class JobCreationRegisterListAPIView(generics.ListCreateAPIView):
+    """
+    APIs for Job Creation and Retreival for Recruiter Dashboard
+    """
+
+    parser_classes = (MultiPartParser, FormParser)
+    serializer_class = serializers.JobCreationSerializer
+    permission_classes = (permissions.IsAuthenticated, IsRecruiter,
+                          IsSameCompany)
+    queryset = models.JobCreation.objects.all()
+
+    def perform_create(self, serializer):
+        return serializer.save(company=models.Recruiter.objects.get(
+            user=self.request.user))
+
+    def get_queryset(self):
+        return self.queryset.filter(company=models.Recruiter.objects.get(
+            user=self.request.user))
+
+
+class JobCreationRegisterDetailListAPIView(
+        generics.RetrieveUpdateDestroyAPIView):
+    """
+    APIs for Job Deletion,Updation and Retreival for Recruiter Dashboard only when activate is false
+    """
+
+    parser_classes = (MultiPartParser, FormParser)
+    serializer_class = serializers.JobCreationSerializer
+    permission_classes = (permissions.IsAuthenticated, IsRecruiter,
+                          IsSameCompany, IsActive)
+    queryset = models.JobCreation.objects.all()
+    lookup_field = "jobid"
+
+    def get_queryset(self):
+        return self.queryset.filter(company=models.Recruiter.objects.get(
+            user=self.request.user))
