@@ -1,6 +1,4 @@
 from django.db import models
-
-# Create your models here.
 from authentication.models import UserProfile
 import hashlib
 # Create your models here.
@@ -74,6 +72,18 @@ class JobCreation(models.Model):
     def __str__(self):
         """Job Creation Company Name"""
         return self.company.user.name
+
+
+def recruiter_jd_extract(instance, filename):
+    # file will be uploaded to MEDIA_ROOT/user_<id>/<filename>
+    encoded = hashlib.sha256(instance.user.name.replace(" ", "").encode())
+    if len(encoded.hexdigest()) > 20:
+        return 'recruiter/static/jd/user/{0}{1}/{2}'.format(
+            instance.user.id,
+            encoded.hexdigest()[:20], filename)
+    else:
+        return 'recruiter/static/jd/user/{0}{1}/{2}'.format(
+            instance.user.id, encoded.hexdigest(), filename)
 
 
 class ExtractJD(models.Model):
