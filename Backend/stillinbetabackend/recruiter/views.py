@@ -108,3 +108,30 @@ class JobListAPIView(generics.ListAPIView):
         queryset = self.get_queryset()
         obj = get_object_or_404(queryset)
         return obj
+
+
+class JobApplicantsAndStatusListAPIView(generics.ListAPIView):
+    """
+    Input job id
+    """
+    parser_classes = (MultiPartParser, FormParser)
+    serializer_class = serializers.JobApplicantsSerializer
+    permission_classes = (permissions.IsAuthenticated, IsRecruiter)
+    queryset = JobApplied.objects.all()
+
+    def get_object(self):
+        queryset = self.get_queryset()
+        obj = get_object_or_404(queryset)
+        return obj
+
+    def get_queryset(self):
+        job_id = self.kwargs['jobid']
+        return self.queryset.filter(
+            job_applied_to=models.JobCreation.objects.get(jobid=job_id))
+
+
+class JobApplicantsAndStatusUpdateAPIView(generics.RetrieveUpdateAPIView):
+    permission_classes = (permissions.IsAuthenticated, IsRecruiter)
+    serializer_class = serializers.JobApplicantUpdateSerializer
+    queryset = JobApplied.objects.all()
+    lookup_field = "job_applied_id"

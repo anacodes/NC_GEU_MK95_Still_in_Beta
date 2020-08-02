@@ -37,3 +37,11 @@ class Applicant(models.Model):
     def __str__(self):
         """Return String representation of user"""
         return self.user.email
+
+
+class JobApplied(models.Model):
+    job_applied_id = models.BigAutoField(primary_key=True)
+    applicant = models.ForeignKey(to=Applicant, on_delete=models.CASCADE)
+    job_applied_to = models.ForeignKey(to=JobCreation,
+                                       on_delete=models.CASCADE)
+    status = models.IntegerField(default=0)
