@@ -45,4 +45,9 @@ Project work in fulfillment of Problem Statement : MK95 (Smart Job Application p
  * Updated JobListings Pageon frontend.
  * Multiple assets and components aded.
  * Company Profile view added on backend.
+#### Progress (9 pm)
+ * Added Job Title Extract Functionality to summarisation Engine.
+ * Added important actions.js for integration of backend and frontend.
+ * Added ExtractJD API to Backend.
+ * Updated Job Views.
 
