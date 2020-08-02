@@ -6,4 +6,5 @@ pip install pyresparser
 pip install PyPDF2
 pip install pdfminer
 pip install docx
+pip install python-docx
 pip install summa
