@@ -29,24 +29,22 @@ def getTitle(s, d):
     return JobTitle
 
 
+def getJobTitle(s):
+    d = {}
 
-d = {}
+    # Reading all prominent job titles
 
-# Reading all prominent job titles
-with open('Job_Title.txt', 'r') as file:
-    Lines = file.readlines()
-    for line in Lines:
-        line = line[0:-1]
-        d[line] = True
-        
+    ### File path may need to be handled, only file name given for now
+    with open('Job_Title.txt', 'r') as file:
+        Lines = file.readlines()
+        for line in Lines:
+            line = line[0:-1]
+            d[line] = True
+            
 
-s = input()
-s = s.lower()
-l = s.split()
-r = min(len(l), 20)
-resTitle = getTitle(l[0:r], d)
+    s = s.lower()
+    l = s.split()
+    r = min(len(l), 20)
+    resTitle = getTitle(l[0:r], d)
 
-if resTitle == '':
-    print('No Title found')
-else:
-    print(resTitle)
+    return resTitle
