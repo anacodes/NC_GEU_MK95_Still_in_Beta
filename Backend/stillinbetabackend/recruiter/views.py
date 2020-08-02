@@ -170,9 +170,12 @@ class ExtractJDAPIView(generics.GenericAPIView):
         jd_save = models.ExtractJD.objects.create(user=self.request.user,
                                                   jd=user_data['jd'])
         # x[0].jd.url
-        # file_type = jd_save.jd.url.split('.')[1]
-        # file_path = jd_save.jd.url
-        # file_path = '..' + file_path
-        # code.extract_jd(file_type, file_path)
+        file_type = jd_save.jd.url.split('.')[1]
+        file_path = jd_save.jd.url[1:]
+        data = code.extract_jd(file_type, file_path)
         models.ExtractJD.objects.filter(user=self.request.user).delete()
-        return Response({"success": "OK"}, status=status.HTTP_200_OK)
+        return Response({
+            "success": "OK",
+            "data": data
+        },
+                        status=status.HTTP_200_OK)
