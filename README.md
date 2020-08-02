@@ -39,3 +39,10 @@ Project work in fulfillment of Problem Statement : MK95 (Smart Job Application p
  * Added routing calls.
  * Added essential plugins for UI.
  * Updated SalaryExtract function in summarisation Engine
+#### Progress (10 am)
+ * Recruiter Created and serializers added to applicant at backend.
+ * Added job Creation Pages to frontend.
+ * Updated JobListings Pageon frontend.
+ * Multiple assets and components aded.
+ * Company Profile view added on backend.
+
