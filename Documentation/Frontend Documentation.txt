@@ -1,0 +1,91 @@
+﻿Frontend Documentation- Still_in_Beta
+Project Name – JP-UK (Job Portal, Uttarakhand)
+
+cmd-commands to run frontend:
+	npm install
+	npm run serve
+
+Technologies used for frontend: 
+•	Vue.js
+•	Vuex
+•	Bootstrap4
+•	HTML
+•	CSS
+•	External npm libraries like Flatpickr, Datepicker, Vue-editor were downloaded from http://www.npmjs.com .
+All the UI components were inspired from Vue-Argon. The rest of the UI was self-developed by members of Team Still_in_Beta.
+
+Component strucutre
+		a. files are easily managable
+		b. Reusable components
+		c. Communication between componets by props
+		
+	 State management 
+		a. Maintain application state in a predictable way.
+		b. Centralized store for a single state of truth.
+		c. Time travel debugging.
+		d. Vuex
+			§ store and share reactive data across the app without trading off performance, testability or maintainability. 
+			§ creates easily accessible data between independent components, 
+			§ No complicated prop drilling.
+	
+	Routing
+		 Implemented on client side using vue-router
+		Features Implemented :
+			i. Nested route/view mapping
+			ii. navigation control
+			iii. Navigation guards
+				1) Doesn't allow routing  if someone tries to access without credencials
+			iv. HTML5 history mode
+	
+	
+	HTTP request 
+		Features implemented:
+			i. Implemented Axios
+			ii. Interceptors
+				1) catch 401 responses and redirect to a login page for authorization.
+			iii. Promise based API calls 
+
+Page-Tree :
+home:
+    sign-up:
+        recuiter
+        jobseeker
+    login:
+        forgot-password
+        reset-password
+    job listings:
+        view job:
+            view company page
+    dashboard:
+        recruiter:
+            complete-recruiter-profile
+            recruiter-profile:
+                update options
+            create-a-job:
+                process Job Description(docx or pdf)
+                edit job description
+                job activate or draft
+            recruiter-dashboard:
+                view all posted jobs:
+                    single-job-view:
+                        select/reject candidate
+                        schedule a meeting(Google Calendar feature)
+                view drafts:
+                    activate
+                view expired jobs
+        jobseeker:
+            complete-jobseeker-profile
+            jobseeker-profile:
+                update resume/other
+            job-listings:
+                search particular category jobs:
+                    view job page
+                    one-click-apply
+                view company page
+    thumbnails:
+        searching-specific-domains in public job listings
+    recommended-jobs:
+        matching-using-cosinesimilarity
+                
+Thank you SIH for granting us this opportunity to work on such a great project.
+                
