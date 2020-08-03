@@ -3,7 +3,7 @@ from rest_framework import generics, status, permissions
 from rest_framework.response import Response
 from authentication.models import UserProfile
 from applicants.models import JobApplied
-from . import models, serializers
+from . import models, serializers, utils
 from .permission import IsRecruiter, IsOwner, IsSameCompany, IsActive, IsStatus
 from rest_framework.parsers import MultiPartParser, FormParser
 from . import code
@@ -287,6 +287,16 @@ class GoogleCalenderSetAPIView(generics.GenericAPIView):
             calendar_id = result['items'][0]['id']
             service.events().insert(calendarId=calendar_id,
                                     body=event).execute()
+            email_body = "Google Meet Scheduled at " + start_time.strftime(
+                '%d/%m/%Y'
+            ) + " for the Position of " + job.job_title + ". Please check your Google Calender for the Time and Date."
+            data = {
+                'flag': 0,
+                'email_body': email_body,
+                'email_subject': job.job_title + " Meeting",
+                'email_id': valid_data['applicant'],
+            }
+            utils.Util.send_email(data)
             return Response({'success': 'ok'}, status=status.HTTP_200_OK)
         except expression as identifier:
             return Response({'error': 'failed'},

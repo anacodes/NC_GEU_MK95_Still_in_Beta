@@ -1,0 +1,9 @@
+pip install spacy==2.1
+pip install nltk
+python -m spacy download en_core_web_sm
+python -m nltk.downloader words
+pip install pyresparser
+pip install PyPDF2
+pip install pdfminer
+pip install docx
+pip install summa

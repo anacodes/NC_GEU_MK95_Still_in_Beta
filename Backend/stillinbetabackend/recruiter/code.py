@@ -24,7 +24,7 @@ import re
 import warnings
 warnings.filterwarnings("ignore")
 
-from . import VacancyExtract, DateExtract, SalaryExtract
+from . import VacancyExtract, DateExtract, SalaryExtract, JobTitleExtract
 
 
 def convert_pdf_to_txt(path, pages=None):
@@ -96,6 +96,14 @@ def extract_jd(file_type, file_path):
         summary_words = 300
         summary_final = summarizer.summarize(
             text, ratio=summary_ratio)  #for words , words = summary_words
+        summary_list = summary_final.split()
+        summary_final_list = []
+        for item in summary_list:
+            if(item[0]=='\\' or (item=="\uf0b7") or (item=="\uf077")):
+                continue
+            else:
+                summary_final_list.append(item)
+        summary_final = " ".join(summary_final_list)
         data["job_summary"] = summary_final
 
         ### Extracting Skills Begins ###
@@ -108,8 +116,8 @@ def extract_jd(file_type, file_path):
         '''Extract Skills'''
         skill_dict = ResumeParser(file_path).get_extracted_data()
         data["skills"] = (skill_dict["skills"])
-        data["total_vacancy"] = VacancyExtract.getVacancy(filtered_text)
-        data["deadline"] = DateExtract.getDate(filtered_text)
+        data["total_vacancy"] = VacancyExtract.getVacancy(text)
+        data["deadline"] = DateExtract.getDate(text)
         found_locations = []
 
         os.chdir('recruiter')
@@ -126,6 +134,8 @@ def extract_jd(file_type, file_path):
                 found_locations.append(item)
         found_locations = " ".join(found_locations)
         data["location"] = found_locations
-        data["salary"] = SalaryExtract.getSalary(filtered_text)
+        data["salary"] = SalaryExtract.getSalary(text)
+        data["job_title"] = JobTitleExtract.getJobTitle(text) 
         os.chdir('..')
+        print(data)   
         return data
