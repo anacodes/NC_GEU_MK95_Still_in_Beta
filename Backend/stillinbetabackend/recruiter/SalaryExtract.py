@@ -55,6 +55,17 @@ def getSal(s, d):
     s = s.lower()
     l = s.split()
     
+    confirm = ['lakh', 'lac', 'crore', 'thousand', 'lakhs', 'lacs', 'crores', 'thousands']
+    confirm_list = {}
+
+    for x in confirm:
+        confirm_list[x] = True
+
+    for i in range(len(l)):
+        if l[i] in confirm_list or l[i][0:-1] in confirm_list:
+            lo = max(0, i - 3)
+            return chkSalary(l[lo:i+1], d)
+
     for i in range(len(l)):
         if l[i] in d or l[i][0:-1] in d:
             lo = max(0, i - 5)
@@ -68,7 +79,7 @@ def getSalary(s):
 
     d = {}
     for x in l:
-        d[x] = 1
+        d[x] = True
 
     resSalary = getSal(s, d)
     return resSalary
