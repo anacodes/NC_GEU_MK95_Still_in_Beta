@@ -1,7 +1,7 @@
 <template>
   <div id="home">
     <div>
-      <!-- <b-carousel
+      <b-carousel
         id="carousel-1"
         v-model="slide"
         :interval="4000"
@@ -16,49 +16,68 @@
         <b-carousel-slide img-src="../../public/img/bg/home_bg.png">
           <div class="row">
             <div class="col-md-6"></div>
-            <div class="col-md-6">
-            </div>
+            <div class="col-md-6"></div>
           </div>
         </b-carousel-slide>
-      </b-carousel> -->
+      </b-carousel>
+      <br />
+      <br />
+      <h1 class="text-white text-center">Job Category</h1>
+      <br />
       <div class="row mb-4">
         <div class="col-xs-6 col-sm-4 col-md-3">
           <div class="thumbnail">
-            <a href="#" class="">
-            <div class="caption">
-              <h3 class = "text-black mt-6">Arts, Audio/Video Technology and Communications</h3>
-            </div>
-            <img src="../../public/img/theme/thumbnails/1.jpg" alt="..." class="img-thumbnail" />
+            <a href="#" class>
+              <div class="caption">
+                <h3 class="text-black mt-6">Information Technology</h3>
+              </div>
+              <img
+                src="../../public/img/theme/thumbnails/it_logo.png"
+                alt="..."
+                class="img-thumbnail"
+              />
             </a>
           </div>
         </div>
         <div class="col-xs-6 col-sm-4 col-md-3">
           <div class="thumbnail">
-            <a href="#" class="">
-            <div class="caption">
-              <h3 class = "text-black mt-6">Agriculture, Food and Natural Resources</h3>
-            </div>
-            <img src="../../public/img/theme/thumbnails/2.jpg" alt="..." class="img-thumbnail" />
+            <a href="#" class>
+              <div class="caption">
+                <h3 class="text-black mt-6">Agriculture, Food and Natural Resources</h3>
+              </div>
+              <img
+                src="../../public/img/theme/thumbnails/agri_logo.jpg"
+                alt="..."
+                class="img-thumbnail"
+              />
             </a>
           </div>
         </div>
         <div class="col-xs-6 col-sm-4 col-md-3">
           <div class="thumbnail">
-            <a href="#" class="">
-            <div class="caption">
-              <h3 class = "text-black mt-6">Business Management and Administration</h3>
-            </div>
-            <img src="../../public/img/theme/thumbnails/3.jpg" alt="..." class="img-thumbnail" />
+            <a href="#" class>
+              <div class="caption">
+                <h3 class="text-black mt-6">Government and Public Administration</h3>
+              </div>
+              <img
+                src="../../public/img/theme/thumbnails/govt_logo.jpg"
+                alt="..."
+                class="img-thumbnail"
+              />
             </a>
           </div>
         </div>
         <div class="col-xs-6 col-sm-4 col-md-3">
           <div class="thumbnail">
-            <a href="#" class="">
-            <div class="caption">
-              <h3 class = "text-black mt-6">Architecture and Construction</h3>
-            </div>
-            <img src="http://lorempixel.com/400/300/sports/1/" alt="..." class="img-thumbnail" />
+            <a href="#" class>
+              <div class="caption">
+                <h3 class="text-black mt-6">Marketing, Sales and Service</h3>
+              </div>
+              <img
+                src="../../public/img/theme/thumbnails/sales_logo.jpg"
+                alt="..."
+                class="img-thumbnail"
+              />
             </a>
           </div>
         </div>
@@ -67,127 +86,57 @@
       <div class="row mb-4">
         <div class="col-xs-6 col-sm-4 col-md-3">
           <div class="thumbnail">
-            <a href="#" class="">
-            <div class="caption">
-              <h3 class = "text-black mt-6">Education and Training</h3>
-            </div>
-            <img src="http://lorempixel.com/400/300/sports/1/" alt="..." class="img-thumbnail" />
+            <a href="#" class>
+              <div class="caption">
+                <h3 class="text-black mt-6">Finance</h3>
+              </div>
+              <img
+                src="../../public/img/theme/thumbnails/finance_logo.jpg"
+                alt="..."
+                class="img-thumbnail"
+              />
             </a>
           </div>
         </div>
         <div class="col-xs-6 col-sm-4 col-md-3">
           <div class="thumbnail">
-            <a href="#" class="">
-            <div class="caption">
-              <h3 class = "text-black mt-6">Finance</h3>
-            </div>
-            <img src="http://lorempixel.com/400/300/sports/1/" alt="..." class="img-thumbnail" />
+            <a href="#" class>
+              <div class="caption">
+                <h3 class="text-black mt-6">Science, Technology, Engineering and Mathematics</h3>
+              </div>
+              <img
+                src="../../public/img/theme/thumbnails/science_logo.png"
+                alt="..."
+                class="img-thumbnail"
+              />
             </a>
           </div>
         </div>
         <div class="col-xs-6 col-sm-4 col-md-3">
           <div class="thumbnail">
-            <a href="#" class="">
-            <div class="caption">
-              <h3 class = "text-black mt-6">Government and Public Administration</h3>
-            </div>
-            <img src="http://lorempixel.com/400/300/sports/1/" alt="..." class="img-thumbnail" />
+            <a href="#" class>
+              <div class="caption">
+                <h3 class="text-black mt-6">Education and Training</h3>
+              </div>
+              <img
+                src="../../public/img/theme/thumbnails/education_logo.jpg"
+                alt="..."
+                class="img-thumbnail"
+              />
             </a>
           </div>
         </div>
         <div class="col-xs-6 col-sm-4 col-md-3">
           <div class="thumbnail">
-            <a href="#" class="">
-            <div class="caption">
-              <h3 class = "text-black mt-6">Health Science</h3>
-            </div>
-            <img src="http://lorempixel.com/400/300/sports/1/" alt="..." class="img-thumbnail" />
-            </a>
-          </div>
-        </div>
-      </div>
-
-      <div class="row mb-4">
-        <div class="col-xs-6 col-sm-4 col-md-3">
-          <div class="thumbnail">
-            <a href="#" class="">
-            <div class="caption">
-              <h3 class = "text-black mt-6">Hospitality and Tourism</h3>
-            </div>
-            <img src="http://lorempixel.com/400/300/sports/1/" alt="..." class="img-thumbnail" />
-            </a>
-          </div>
-        </div>
-        <div class="col-xs-6 col-sm-4 col-md-3">
-          <div class="thumbnail">
-            <a href="#" class="">
-            <div class="caption">
-              <h3 class = "text-black mt-6">Human Services</h3>
-            </div>
-            <img src="http://lorempixel.com/400/300/sports/1/" alt="..." class="img-thumbnail" />
-            </a>
-          </div>
-        </div>
-        <div class="col-xs-6 col-sm-4 col-md-3">
-          <div class="thumbnail">
-            <a href="#" class="">
-            <div class="caption">
-              <h3 class = "text-black mt-6">Information Technology</h3>
-            </div>
-            <img src="http://lorempixel.com/400/300/sports/1/" alt="..." class="img-thumbnail" />
-            </a>
-          </div>
-        </div>
-        <div class="col-xs-6 col-sm-4 col-md-3">
-          <div class="thumbnail">
-            <a href="#" class="">
-            <div class="caption">
-              <h3 class = "text-black mt-6">Law, Public Safety, Corrections and Security</h3>
-            </div>
-            <img src="http://lorempixel.com/400/300/sports/1/" alt="..." class="img-thumbnail" />
-            </a>
-          </div>
-        </div>
-      </div>
-
-      <div class="row mb-4">
-        <div class="col-xs-6 col-sm-4 col-md-3">
-          <div class="thumbnail">
-            <a href="#" class="">
-            <div class="caption">
-              <h3 class = "text-black mt-6">Manufacturing</h3>
-            </div>
-            <img src="http://lorempixel.com/400/300/sports/1/" alt="..." class="img-thumbnail" />
-            </a>
-          </div>
-        </div>
-        <div class="col-xs-6 col-sm-4 col-md-3">
-          <div class="thumbnail">
-            <a href="#" class="">
-            <div class="caption">
-              <h3 class = "text-black mt-6">Marketing, Sales and Service</h3>
-            </div>
-            <img src="http://lorempixel.com/400/300/sports/1/" alt="..." class="img-thumbnail" />
-            </a>
-          </div>
-        </div>
-        <div class="col-xs-6 col-sm-4 col-md-3">
-          <div class="thumbnail">
-            <a href="#" class="">
-            <div class="caption">
-              <h3 class = "text-black mt-6">Science, Technology, Engineering and Mathematics</h3>
-            </div>
-            <img src="http://lorempixel.com/400/300/sports/1/" alt="..." class="img-thumbnail" />
-            </a>
-          </div>
-        </div>
-        <div class="col-xs-6 col-sm-4 col-md-3">
-          <div class="thumbnail">
-            <a href="#" class="">
-            <div class="caption">
-              <h3 class = "text-black mt-6">Transportation, Distribution and Logistics</h3>
-            </div>
-            <img src="http://lorempixel.com/400/300/sports/1/" alt="..." class="img-thumbnail" />
+            <a href="#" class>
+              <div class="caption">
+                <h3 class="text-black mt-6">Other..</h3>
+              </div>
+              <img
+                src="../../public/img/theme/thumbnails/job_logo.jpg"
+                alt="..."
+                class="img-thumbnail"
+              />
             </a>
           </div>
         </div>
@@ -292,31 +241,30 @@ const options = {
 body {
   padding-top: 50px;
 }
- 
+
 .thumbnail {
-    position:relative;
-    overflow:hidden;
+  position: relative;
+  overflow: hidden;
 }
- 
+
 .caption {
-    position:absolute;
-    top:-100%;
-    right:0;
-    background:rgba(165, 152, 152, 0.75);
-    width:100%;
-    height:100%;
-    padding:2%;
-    text-align:center;
-    color:#fff !important;
-    z-index:2;
-    -webkit-transition: all 0.5s ease-in-out;
-    -moz-transition: all 0.5s ease-in-out;
-    -o-transition: all 0.5s ease-in-out;
-    -ms-transition: all 0.5s ease-in-out;
-    transition: all 0.5s ease-in-out;
+  position: absolute;
+  top: -100%;
+  right: 0;
+  background: rgba(165, 152, 152, 0.75);
+  width: 100%;
+  height: 100%;
+  padding: 2%;
+  text-align: center;
+  color: #fff !important;
+  z-index: 2;
+  -webkit-transition: all 0.5s ease-in-out;
+  -moz-transition: all 0.5s ease-in-out;
+  -o-transition: all 0.5s ease-in-out;
+  -ms-transition: all 0.5s ease-in-out;
+  transition: all 0.5s ease-in-out;
 }
 .thumbnail:hover .caption {
-    top:0%;
+  top: 0%;
 }
-    
 </style>
