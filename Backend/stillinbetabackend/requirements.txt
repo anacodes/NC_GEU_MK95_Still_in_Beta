@@ -63,6 +63,8 @@ pdfminer.six==20191020
 docx
 python-docx
 summa
+django-cron
+###### Install files below manually
 python -m spacy download en_core_web_sm
 python -m nltk.downloader words
 pip install --upgrade google-api-python-client google-auth-httplib2 google-auth-oauthlib
