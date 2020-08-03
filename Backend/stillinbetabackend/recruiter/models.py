@@ -68,6 +68,7 @@ class JobCreation(models.Model):
     job_type = models.CharField(max_length=50)
     domain = models.CharField(max_length=255)
     company = models.ForeignKey(to=Recruiter, on_delete=models.CASCADE)
+    time = models.DateTimeField(auto_now=True)
 
     def __str__(self):
         """Job Creation Company Name"""

@@ -98,3 +98,11 @@ class ExtractJobDetailsSerializer(serializers.ModelSerializer):
     class Meta:
         model = ExtractJD
         fields = ('jd', )
+
+
+class GoogleDateSetSerializer(serializers.Serializer):
+    date = serializers.DateField()
+    time = serializers.TimeField()
+    recruiter = serializers.EmailField()
+    applicant = serializers.EmailField()
+    jobid = serializers.IntegerField()
