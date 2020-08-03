@@ -48,9 +48,11 @@ INSTALLED_APPS = [
     'recruiter',
     'corsheaders',
     'django_cleanup.apps.CleanupConfig',
+    'django_cron',
 ]
 
 MIDDLEWARE = [
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -58,7 +60,6 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.common.CommonMiddleware',
 ]
 
@@ -68,7 +69,8 @@ TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
         'DIRS': [
-            TEMPLATE_DIR,TEMPLATE_DIR_RECRUITER,
+            TEMPLATE_DIR_AUTH,
+            TEMPLATE_DIR_RECRUITER,
         ],
         'APP_DIRS': True,
         'OPTIONS': {
@@ -82,6 +84,9 @@ TEMPLATES = [
     },
 ]
 
+CRON_CLASSES = [
+    "recruiter.views.MyCronJob",
+]
 WSGI_APPLICATION = 'stillinbetabackend.wsgi.application'
 
 # Database
@@ -163,6 +168,10 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.0/howto/static-files/
 
 CORS_ORIGIN_ALLOW_ALL = True
+
+CORS_ORIGIN_WHITELIST = [
+    "http://localhost:8080",
+]
 
 STATIC_URL = '/static/'
 
