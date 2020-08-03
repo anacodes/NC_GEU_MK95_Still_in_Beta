@@ -7,6 +7,11 @@ from . import models, serializers
 from .permission import IsRecruiter, IsOwner, IsSameCompany, IsActive, IsStatus
 from rest_framework.parsers import MultiPartParser, FormParser
 from . import code
+from apiclient.discovery import build
+from google_auth_oauthlib.flow import InstalledAppFlow
+import pickle
+scopes = ['https://www.googleapis.com/auth/calendar']
+import datetime
 # Create your views here.
 
 
@@ -179,3 +184,110 @@ class ExtractJDAPIView(generics.GenericAPIView):
             "data": data
         },
                         status=status.HTTP_200_OK)
+
+
+class GoogleCalenderAuthAPIView(generics.GenericAPIView):
+    permission_classes = (permissions.IsAuthenticated, IsRecruiter)
+
+    def get(self, request):
+        flow = InstalledAppFlow.from_client_secrets_file(
+            "media/client_secret.json",
+            scopes=scopes,
+            redirect_uri='urn:ietf:wg:oauth:2.0:oob')
+        auth = flow.authorization_url(prompt='consent')
+        return Response({'gauthlink': auth}, status=status.HTTP_200_OK)
+
+    def post(self, request):
+        try:
+            data = request.data['credentials']
+            flow = InstalledAppFlow.from_client_secrets_file(
+                "media/client_secret.json",
+                scopes=scopes,
+                redirect_uri='urn:ietf:wg:oauth:2.0:oob')
+            flow.fetch_token(code=data)
+            credentials = flow.credentials
+            pickle.dump(credentials, open(str(request.user.id) + ".pkl", "wb"))
+            credentials = pickle.load(open(
+                str(request.user.id) + ".pkl", "rb"))
+            service = build("calendar", "v3", credentials=credentials)
+            result = service.calendarList().list().execute()
+            print(result['items'][0])
+            return Response({'success': 'ok'}, status=status.HTTP_200_OK)
+        except expression as identifier:
+            return Response({'error': 'Google Auth Failed'},
+                            status=status.HTTP_401_UNAUTHORIZED)
+
+
+class GoogleCalenderSetAPIView(generics.GenericAPIView):
+    permission_classes = (permissions.IsAuthenticated, IsRecruiter)
+    serializer_class = serializers.GoogleDateSetSerializer
+
+    def post(self, request):
+        serializer = self.serializer_class(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        credentials = pickle.load(open(str(request.user.id) + ".pkl", "rb"))
+        timezone = 'Asia/Kolkata'
+        valid_data = serializer.data
+        date_time_str = valid_data['date'] + " " + valid_data['time']
+        try:
+            job = models.JobCreation.objects.get(jobid=valid_data['jobid'])
+            start_time = datetime.datetime.strptime(date_time_str,
+                                                    '%Y-%m-%d %H:%M:%S')
+            end_time = start_time + datetime.timedelta(hours=1)
+            event = {
+                'summary':
+                job.job_title,
+                'location':
+                'Online Interview',
+                'description':
+                job.summary,
+                'start': {
+                    'dateTime': start_time.strftime("%Y-%m-%dT%H:%M:%S"),
+                    'timeZone': timezone,
+                },
+                'end': {
+                    'dateTime': end_time.strftime("%Y-%m-%dT%H:%M:%S"),
+                    'timeZone': timezone,
+                },
+                'attendees': [
+                    {
+                        'email': valid_data['recruiter']
+                    },
+                    {
+                        'email': valid_data['applicant']
+                    },
+                ],
+                'conferenceData': {
+                    'createRequest': {
+                        'requestId': 'its done baby',
+                        'conferenceSolutionKey': {
+                            'type': 'hangoutsMeet'
+                        }
+                    }
+                },
+                'reminders': {
+                    'useDefault':
+                    False,
+                    'overrides': [
+                        {
+                            'method': 'email',
+                            'minutes': 24 * 60
+                        },
+                        {
+                            'method': 'popup',
+                            'minutes': 10
+                        },
+                    ],
+                },
+            }
+            credentials = pickle.load(open(
+                str(request.user.id) + ".pkl", "rb"))
+            service = build("calendar", "v3", credentials=credentials)
+            result = service.calendarList().list().execute()
+            calendar_id = result['items'][0]['id']
+            service.events().insert(calendarId=calendar_id,
+                                    body=event).execute()
+            return Response({'success': 'ok'}, status=status.HTTP_200_OK)
+        except expression as identifier:
+            return Response({'error': 'failed'},
+                            status=status.HTTP_401_UNAUTHORIZED)

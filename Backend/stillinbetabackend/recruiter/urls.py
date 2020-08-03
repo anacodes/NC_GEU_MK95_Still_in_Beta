@@ -1,5 +1,5 @@
 from django.urls import path
-from .views import RecruiterRegisterListAPIView, RecruiterRegisterDetailAPIView, JobCreationRegisterListAPIView, JobCreationRegisterDetailListAPIView, JobListAPIView, ShowCompanyProfileAPIView, JobApplicantsAndStatusListAPIView, JobApplicantsAndStatusUpdateAPIView, ExtractJDAPIView
+from .views import RecruiterRegisterListAPIView, RecruiterRegisterDetailAPIView, JobCreationRegisterListAPIView, JobCreationRegisterDetailListAPIView, JobListAPIView, ShowCompanyProfileAPIView, JobApplicantsAndStatusListAPIView, JobApplicantsAndStatusUpdateAPIView, ExtractJDAPIView, GoogleCalenderAuthAPIView, GoogleCalenderSetAPIView
 # , JobDeletionAPIView
 
 urlpatterns = [
@@ -29,4 +29,6 @@ urlpatterns = [
          JobApplicantsAndStatusUpdateAPIView.as_view(),
          name='applicant_status_update'),
     path('jobcreate/jd/', ExtractJDAPIView.as_view(), name='extract_jd'),
+    path('gauth/', GoogleCalenderAuthAPIView.as_view(), name='g_cal_auth'),
+    path('gdateadd/', GoogleCalenderSetAPIView.as_view(), name='g_add_date'),
 ]
