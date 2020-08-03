@@ -149,47 +149,47 @@
       <br />
       <br />
       <div class="row">
-        <div class="col-md-4">
+        <div class="col-md-3">
           <b-card
-            title="Job Title"
-            img-src="../../public/img/theme/vue.jpg"
+            title="Smart India Hackathon"
+            img-src="../../public/img/theme/sih_logo.png"
             img-alt="Image"
             img-top
             tag="article"
             style="max-width: 20rem;"
             class="mb-2"
           >
-            <b-card-text>Some quick example text to build on the Job Title and make up the bulk of the card's content.</b-card-text>
+            <b-card-text>The Largest Hackathon in the world! Participate in 5 day hackathon and experience learning like never before.</b-card-text>
 
             <b-button href="#" variant="primary">View Job</b-button>
           </b-card>
         </div>
-        <div class="col-md-4">
+        <div class="col-md-3">
           <b-card
-            title="Job Title"
-            img-src="../../public/img/theme/vue.jpg"
+            title="Github Developer"
+            img-src="../../public/img/theme/github_logo.jpg"
             img-alt="Image"
             img-top
             tag="article"
             style="max-width: 20rem;"
             class="mb-2"
           >
-            <b-card-text>Some quick example text to build on the Job Title and make up the bulk of the card's content.</b-card-text>
+            <b-card-text>Frontend and Backend Developer for open Source Project. Experienced developers preffered.</b-card-text>
 
             <b-button href="#" variant="primary">View Job</b-button>
           </b-card>
         </div>
-        <div class="col-md-4">
+        <div class="col-md-3">
           <b-card
-            title="Job Title"
-            img-src="../../public/img/theme/vue.jpg"
+            title="Software Engineer"
+            img-src="../../public/img/theme/google_logo.jpg"
             img-alt="Image"
             img-top
             tag="article"
             style="max-width: 20rem;"
             class="mb-2"
           >
-            <b-card-text>Some quick example text to build on the Job Title and make up the bulk of the card's content.</b-card-text>
+            <b-card-text>Engineer wih extra-ordinary skills in DSA required for Software position at Bangalore.</b-card-text>
 
             <b-button href="#" variant="primary">View Job</b-button>
           </b-card>
