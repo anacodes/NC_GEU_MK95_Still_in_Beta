@@ -406,7 +406,7 @@ export default {
                     resolve(resp.data)
                 })
                 .catch(err => {
-                    console.log('error creating job');
+                    console.log('error extracting jd');
                     reject(err.response)
                 })
         })
@@ -450,6 +450,48 @@ export default {
                 })
                 .catch(err => {
                     console.log("error in RESETPASSWORD");
+                    reject(err.response)
+                })
+        })
+    },
+
+    // caleder 3 apis
+    GAUTH({ commit }) {
+        return new Promise((resolve, reject) => {
+            axios({
+                url: 'http://127.0.0.1:8000/recruiter/gauth', method: 'GET',
+            })
+                .then(resp => {
+                    resolve(resp.data)
+                })
+                .catch(err => {
+                    console.log('error in guath link');
+                    reject(err.response)
+                })
+        })
+    },
+
+    GAUTHTOKEN({ commit }, payload) {
+        return new Promise((resolve, reject) => {
+            axios({ url: 'http://127.0.0.1:8000/recruiter/gauth/', data: payload, method: 'POST' })
+                .then(resp => {
+                    resolve(resp.data)
+                })
+                .catch(err => {
+                    console.log("error reset pass request");
+                    reject(err.response)
+                })
+        })
+    },
+
+    MEETING({ commit }, payload) {
+        return new Promise((resolve, reject) => {
+            axios({ url: 'http://127.0.0.1:8000/recruiter/gdateadd/', data: payload, method: 'POST' })
+                .then(resp => {
+                    resolve(resp.data)
+                })
+                .catch(err => {
+                    console.log("error reset pass request");
                     reject(err.response)
                 })
         })

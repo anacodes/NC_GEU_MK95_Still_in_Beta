@@ -260,13 +260,6 @@ export default {
     };
   },
   methods: {
-    doAjax() {
-      this.isLoading = true;
-      setTimeout(() => {
-        this.isLoading = false;
-      }, 5000);
-    },
-
     onJDupload() {
       this.jd = this.$refs.file.files[0];
       // console.log("zala ka upload",  this.$refs.file.files)
@@ -286,6 +279,7 @@ export default {
             this.salary = success.data.salary;
             this.deadline = success.data.deadline;
             this.skills = success.data.skills.join(",");
+            this.jobtitle = success.data.job_title;
           })
           .catch(error => {
             this.isLoading = false;

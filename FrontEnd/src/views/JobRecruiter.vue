@@ -197,7 +197,18 @@
                                   </b-row>
                                   <div class="row">
                                     <div class="col-md-3 my-2">
-                                      <base-button type="success" size="md">Schedule Meeting</base-button>
+                                      <div class="vld-parent">
+                                        <loading
+                                          :active.sync="isLoading"
+                                          :can-cancel="false"
+                                          :is-full-page="fullPage"
+                                        ></loading>
+                                        <base-button
+                                          type="success"
+                                          size="md"
+                                          @click="setMeeting(row.item.email)"
+                                        >Schedule Meeting</base-button>
+                                      </div>
                                     </div>
                                     <div class="col-md-4 my-2">
                                       <base-input addon-left-icon="ni ni-calendar-grid-58">
@@ -214,7 +225,7 @@
                                     </div>
                                     <div class="col-md-5 my-2">
                                       <base-input addon-left-icon="ni ni-watch-time">
-                                      <vue-timepicker v-model="yourTimeValue" format="hh:mm A"></vue-timepicker>
+                                        <vue-timepicker format="HH:mm:ss" v-model="time"></vue-timepicker>
                                       </base-input>
                                     </div>
                                   </div>
@@ -478,17 +489,21 @@
 <script>
 import flatPicker from "vue-flatpickr-component";
 import "flatpickr/dist/flatpickr.css";
-import VueTimepicker from 'vue2-timepicker'
-import 'vue2-timepicker/dist/VueTimepicker.css'
+import VueTimepicker from "vue2-timepicker";
+import "vue2-timepicker/dist/VueTimepicker.css";
+import Loading from "vue-loading-overlay";
+import "vue-loading-overlay/dist/vue-loading.css";
+import { mapGetters } from "vuex";
 // Tables
 export default {
   components: {
     flatPicker,
-    VueTimepicker 
+    VueTimepicker,
+    Loading
   },
   name: "JobRecruiter",
   props: {
-    myJob: Object,
+    myJob: Object
   },
   created() {
     this.checkData();
@@ -496,6 +511,10 @@ export default {
   },
   data() {
     return {
+      isLoading: false,
+      fullPage: true,
+      date: "",
+      time: "",
       job: {},
       pendingApp: [],
       selectedApp: [],
@@ -504,28 +523,28 @@ export default {
           key: "details",
           label: "",
           sortable: false,
-          class: "text-center",
+          class: "text-center"
         },
         {
           key: "id",
           label: "Appli. ID",
           sortable: true,
           sortDirection: "asc",
-          class: "text-center",
+          class: "text-center"
         },
         {
           key: "name",
           label: "Appli. Name",
           sortable: true,
           sortDirection: "asc",
-          class: "text-center",
+          class: "text-center"
         },
 
         {
           key: "link",
           label: "Resume",
           sortable: false,
-          class: "text-center",
+          class: "text-center"
         },
 
         {
@@ -534,8 +553,8 @@ export default {
           sortable: true,
           sortByFormatted: true,
           filterByFormatted: true,
-          class: "text-center",
-        },
+          class: "text-center"
+        }
       ],
       totalRows: 1,
       currentPage: 1,
@@ -549,7 +568,7 @@ export default {
       infoModal: {
         id: "info-modal",
         title: "",
-        content: "",
+        content: ""
       },
 
       // table 2
@@ -558,28 +577,28 @@ export default {
           key: "details",
           label: "",
           sortable: false,
-          class: "text-center",
+          class: "text-center"
         },
         {
           key: "id",
           label: "Appli. ID",
           sortable: true,
           sortDirection: "asc",
-          class: "text-center",
+          class: "text-center"
         },
         {
           key: "name",
           label: "Appli. Name",
           sortable: true,
           sortDirection: "asc",
-          class: "text-center",
+          class: "text-center"
         },
         {
           key: "link",
           label: "Resume",
           sortable: false,
-          class: "text-center",
-        },
+          class: "text-center"
+        }
       ],
       totalRowsB: 1,
       currentPageB: 1,
@@ -593,22 +612,23 @@ export default {
       infoModalB: {
         id: "info-modal",
         title: "",
-        content: "",
-      },
+        content: ""
+      }
     };
   },
   computed: {
+    ...mapGetters(["Email"]),
     sortOptions() {
       // Create an options list from our fields
       return this.fields
-        .filter((f) => f.sortable)
-        .map((f) => {
+        .filter(f => f.sortable)
+        .map(f => {
           return {
             text: f.label,
-            value: f.key,
+            value: f.key
           };
         });
-    },
+    }
   },
   mounted() {
     // Set the initial number of items
@@ -668,19 +688,18 @@ export default {
         this.job.domain = this.myJob.domain;
       }
     },
-    checkJD: function () {
+    checkJD: function() {
       window.open(this.job.jd, "_blank");
     },
-    checkResume: function (link) {
+    checkResume: function(link) {
       window.open(link, "_blank");
     },
     fetchData() {
       const jobid = this.job.jobid;
       this.$store
         .dispatch("GETAPPLICANTS", jobid)
-        .then((success) => {
+        .then(success => {
           console.log("fetch called");
-          // console.log(success);
           for (var i = 0; i < success.length; i++) {
             var arr = {};
             arr.id = success[i].job_applied_id;
@@ -699,7 +718,7 @@ export default {
             }
           }
         })
-        .catch((error) => {
+        .catch(error => {
           console.log(error.data);
           this.errors.push(error.data);
         });
@@ -711,13 +730,13 @@ export default {
       payload.status = 1;
       this.$store
         .dispatch("STATUSUPDATE", payload)
-        .then((success) => {
+        .then(success => {
           this.pendingApp = [];
           this.selectedApp = [];
           alert("successfully updated status");
           this.fetchData();
         })
-        .catch((error) => {
+        .catch(error => {
           console.log(error.data);
           this.errors.push(error.data);
         });
@@ -728,26 +747,52 @@ export default {
       payload.status = -1;
       this.$store
         .dispatch("STATUSUPDATE", payload)
-        .then((success) => {
+        .then(success => {
           this.pendingApp = [];
           this.selectedApp = [];
           alert("successfully updated status");
           this.fetchData();
         })
-        .catch((error) => {
+        .catch(error => {
           console.log(error.data);
           this.errors.push(error.data);
         });
     },
-
+    setMeeting(email) {
+      this.isLoading = true;
+      if (this.validMeet()) {
+        this.$store
+          .dispatch("MEETING", {
+            date: this.date,
+            time: this.time,
+            recruiter: this.Email,
+            applicant: email,
+            jobid: this.myJob.jobid
+          })
+          .then(success => {
+            this.isLoading = false;
+            this.$swal(
+              "Successfully scheduled meeting",
+              "Thank You!",
+              "success"
+            );
+          })
+          .catch(error => {
+            this.isLoading = false;
+            alert("cannot schedule it!");
+            console.log(error.data);
+            this.errors.push(error.data);
+          });
+      }
+    },
     jobActivate() {
       this.$store
         .dispatch("DRAFTACTIVATE", this.job.jobid)
-        .then((success) => {
+        .then(success => {
           alert("Job activated succesfully!!");
           this.$router.push("/recruiter");
         })
-        .catch((error) => {
+        .catch(error => {
           console.log(error.data);
           this.errors.push(error.data);
         });
@@ -756,29 +801,29 @@ export default {
     jobDelete() {
       this.$store
         .dispatch("DRAFTDELETE", this.job.jobid)
-        .then((success) => {
+        .then(success => {
           this.$swal("Job deleted succesfully!!", "success");
           this.$router.push("/recruiter");
         })
-        .catch((error) => {
+        .catch(error => {
           console.log(error.data);
           this.errors.push(error.data);
         });
-      // this.$swal("Confirm Deletion?", {
-      //   buttons: {
-      //     cancel: "cancel",
-      //     confirm: "confirm"
-      //   }
-      // }).then(value => {
-      //   switch (value) {
-      //     case "confirm":
-
-      //       break;
-      //     default:
-      //   }
-      // });
     },
-  },
+
+    validMeet() {
+      if (!this.date) {
+        alert("enter date");
+        return false;
+      }
+      if (!this.time) {
+        alert("enter time");
+        return false;
+      }
+
+      return true;
+    }
+  }
 };
 </script>
 
