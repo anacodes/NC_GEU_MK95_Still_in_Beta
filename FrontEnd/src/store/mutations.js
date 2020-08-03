@@ -20,6 +20,7 @@ export default {
         localStorage.setItem('registered', registered)
         localStorage.setItem('is_recruiter', is_recruiter)
         localStorage.setItem('name', name)
+        localStorage.setItem('email', email)
         axios.defaults.headers.common['Authorization'] = `Bearer ${token}`
     },
 
@@ -31,10 +32,11 @@ export default {
         state.auth.status = ''
         state.auth.token = ''
         state.auth.refresh_token = ''
-
+        
         // local store
         localStorage.removeItem('token')
         localStorage.removeItem('name')
+        localStorage.removeItem('email')
         localStorage.removeItem('rtoken')
         localStorage.removeItem('registered')
         localStorage.removeItem('is_recruiter')

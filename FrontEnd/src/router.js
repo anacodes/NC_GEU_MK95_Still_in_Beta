@@ -125,7 +125,8 @@ const routes = [
       },
       {
         path: 'jobdetails',
-        name: 'jobdetails',
+        name: 'JobRecruiter',
+        props: true,
         component: () => import('./views/JobRecruiter.vue'),
         meta: {
           requiresAuth: true,

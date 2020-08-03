@@ -7,27 +7,26 @@
           <stats-card
             title="Total Jobs"
             type="gradient-info"
-            sub-title="350,897"
+            :sub-title="total_jobs"
             icon="ni ni-briefcase-24"
             class="mb-4 mb-xl-0"
           ></stats-card>
         </div>
         <div class="col-xl-4 col-lg-8">
           <base-input
-            v-model="googleauth"
+            v-model="gauth"
             alternative
             type="text"
             placeholder="Google Auth"
-            label = "Google Auth"
+            label="Google Auth"
           ></base-input>
-          <div class = "row">
-          <div class = "mx-2">
-          <base-button type="success">Authenticate</base-button>
-        </div>
-        <div>
-          <base-button type="secondary">Authagain</base-button>
-        </div>
-        </div>
+          <div class="row">
+            <div class="vld-parent">
+              <loading :active.sync="isLoading" :can-cancel="false" :is-full-page="fullPage"></loading>
+              <base-button type="success" @click="authenticate()">Authenticate</base-button>
+              <base-button type="info" @click="sendAuth()">Send Auth</base-button>
+            </div>
+          </div>
         </div>
       </div>
     </base-header>
@@ -348,44 +347,52 @@
 // Tables
 import SocialTrafficTable from "./Dashboard/SocialTrafficTable";
 import PageVisitsTable from "./Dashboard/PageVisitsTable";
+import Loading from "vue-loading-overlay";
+import "vue-loading-overlay/dist/vue-loading.css";
 export default {
+  components: {
+    Loading
+  },
   created() {
     // console.log("created call");
     this.fetchData();
   },
   data() {
     return {
+      isLoading: false,
+      fullPage: true,
+      gauth: "",
       active: [],
       deactive: [],
       history: [],
-
+      total_jobs: "",
       fieldsA: [
         {
           key: "id",
           label: "Job ID",
           sortable: true,
           sortDirection: "asc",
-          class: "text-center",
+          class: "text-center"
         },
         {
           key: "title",
           label: "Job Title",
           sortable: true,
           sortDirection: "asc",
-          class: "text-center",
+          class: "text-center"
         },
         {
           key: "location",
           label: "Location",
           sortable: true,
           sortDirection: "asc",
-          class: "text-center",
+          class: "text-center"
         },
         {
           key: "link",
           label: "Details",
-          class: "text-center",
-        },
+          class: "text-center"
+        }
       ],
       fieldsB: [
         {
@@ -393,28 +400,28 @@ export default {
           label: "Job ID",
           sortable: true,
           sortDirection: "asc",
-          class: "text-center",
+          class: "text-center"
         },
         {
           key: "title",
           label: "Job Title",
           sortable: true,
           sortDirection: "asc",
-          class: "text-center",
+          class: "text-center"
         },
         {
           key: "location",
           label: "Location",
           sortable: true,
           sortDirection: "asc",
-          class: "text-center",
+          class: "text-center"
         },
 
         {
           key: "link",
           label: "Details",
-          class: "text-center",
-        },
+          class: "text-center"
+        }
       ],
       fieldsC: [
         {
@@ -422,28 +429,28 @@ export default {
           label: "Job ID",
           sortable: true,
           sortDirection: "asc",
-          class: "text-center",
+          class: "text-center"
         },
         {
           key: "title",
           label: "Job Title",
           sortable: true,
           sortDirection: "asc",
-          class: "text-center",
+          class: "text-center"
         },
         {
           key: "location",
           label: "Location",
           sortable: true,
           sortDirection: "asc",
-          class: "text-center",
+          class: "text-center"
         },
 
         {
           key: "link",
           label: "Details",
-          class: "text-center",
-        },
+          class: "text-center"
+        }
       ],
       totalRowsA: 1,
       currentPageA: 1,
@@ -457,7 +464,7 @@ export default {
       infoModalA: {
         id: "info-modalA",
         title: "",
-        content: "",
+        content: ""
       },
       totalRowsB: 1,
       currentPageB: 1,
@@ -471,7 +478,7 @@ export default {
       infoModalB: {
         id: "info-modal",
         title: "",
-        content: "",
+        content: ""
       },
       totalRowsC: 1,
       currentPageC: 1,
@@ -485,22 +492,22 @@ export default {
       infoModalC: {
         id: "info-modal",
         title: "",
-        content: "",
-      },
+        content: ""
+      }
     };
   },
   computed: {
     sortOptions() {
       // Create an options list from our fields
       return this.fields
-        .filter((f) => f.sortable)
-        .map((f) => {
+        .filter(f => f.sortable)
+        .map(f => {
           return {
             text: f.label,
-            value: f.key,
+            value: f.key
           };
         });
-    },
+    }
   },
   mounted() {
     // Set the initial number of items
@@ -537,9 +544,10 @@ export default {
     fetchData() {
       this.$store
         .dispatch("RECDASHBOARD")
-        .then((success) => {
+        .then(success => {
           console.log("fetch called");
           // console.log(success);
+          this.total_jobs = success.length.toString();
           for (var i = 0; i < success.length; i++) {
             var arr = {};
             arr.title = success[i].job_title;
@@ -555,12 +563,61 @@ export default {
             }
           }
         })
-        .catch((error) => {
+        .catch(error => {
           console.log(error.data);
           this.errors.push(error.data.detail);
         });
     },
-  },
+
+    sendAuth() {
+      this.isLoading = true;
+      this.$store
+        .dispatch("GAUTH")
+        .then(success => {
+          this.isLoading = false;
+          this.$swal("SENT", "opening new window", "success");
+          window.open(success.gauthlink[0], "_blank");
+        })
+        .catch(error => {
+          this.isLoading = false;
+          alert("error");
+          console.log(error.data);
+          this.errors.push(error.data);
+        });
+    },
+
+    authenticate() {
+      if (this.validAuth()) {
+        this.isLoading = true;
+        this.$store
+          .dispatch("GAUTHTOKEN", {
+            credentials: this.gauth
+          })
+          .then(success => {
+            this.isLoading = false;
+            this.$swal(
+              "AUTHENTICATED",
+              "you can now schedule meetings",
+              "success"
+            );
+          })
+          .catch(error => {
+            this.isLoading = false;
+            alert("error");
+            console.log(error.data);
+            this.errors.push(error.data);
+          });
+      }
+    },
+
+    validAuth() {
+      if (!this.gauth) {
+        alert("please enter your authentication code");
+        return false;
+      }
+      return true;
+    }
+  }
 };
 </script>
 <style>

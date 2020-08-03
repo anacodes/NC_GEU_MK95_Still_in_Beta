@@ -8,13 +8,18 @@ export default {
     refreshToken: (state) => {
         return state.auth.refresh_token;
     },
-    isRecruiter : (state) => {
+    isRecruiter: (state) => {
         return state.is_recruiter == true;
     },
-    isRegistered : (state) => {
+    isRegistered: (state) => {
         return state.registered == true;
     },
-    Name : (state) =>{
+    Name: (state) => {
         return state.auth.name;
+    },
+
+    Email: (state) => {
+        return state.auth.email;
     }
+
 };

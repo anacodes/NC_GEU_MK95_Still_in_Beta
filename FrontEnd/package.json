@@ -1,5 +1,5 @@
 {
-  "name": "still_in_beta",
+  "name": "vue-argon-dashboard",
   "version": "0.1.0",
   "private": true,
   "scripts": {
@@ -12,13 +12,20 @@
     "axios": "^0.19.2",
     "bootstrap": "4.5.0",
     "bootstrap-vue": "2.15.0",
+    "chart.js": "2.9.3",
     "core-js": "3.6.5",
+    "mdbvue": "^6.7.1",
+    "nouislider": "14.6.0",
+    "register-service-worker": "1.7.1",
     "vue": "2.6.11",
+    "vue-chartjs": "3.5.0",
     "vue-clipboard2": "0.3.1",
     "vue-flatpickr-component": "^8.1.5",
+    "vue-loading-overlay": "^3.3.2",
     "vue-router": "3.3.4",
     "vue-swal": "^1.0.0",
     "vue2-editor": "^2.10.2",
+    "vue2-timepicker": "^1.1.3",
     "vue2-transitions": "0.3.0",
     "vuejs-datepicker": "^1.6.2",
     "vuex": "^3.5.1"
