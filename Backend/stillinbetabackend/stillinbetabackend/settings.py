@@ -15,7 +15,8 @@ from datetime import timedelta
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-TEMPLATE_DIR = os.path.join(BASE_DIR, 'authentication/templates/jobportal')
+TEMPLATE_DIR_AUTH = os.path.join(BASE_DIR,
+                                 'authentication/templates/jobportal')
 TEMPLATE_DIR_RECRUITER = os.path.join(BASE_DIR,
                                       'recruiter/templates/jobportal')
 
