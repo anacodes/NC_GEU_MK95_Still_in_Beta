@@ -61,4 +61,5 @@ Project work in fulfillment of Problem Statement : MK95 (Smart Job Application p
  * Google API requirement added.
  * Salary Extraction integrated with backend.
  * Recommendation system now active (Recommendation Mails will be auto sent to jobseekrs at 12 midnight everyday)
+#### Progress (4 pm) - Finished with Coding the whole Project!
 
