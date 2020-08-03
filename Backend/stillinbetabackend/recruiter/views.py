@@ -321,10 +321,19 @@ class MyCronJob(CronJobBase):
         job_skills = []
         for x in applicant:
             app_skills.append(x.key_skills)
-        print()
         for x in job:
             print(x.job_title, end=" ")
             job_skills.append(x.skills)
-        print()
         choice = Recommendation.Recommendation(app_skills, job_skills)
-        print(choice)
+        for i in range(0, len(choice)):
+            email_body = "Job Title : " + job[
+                choice[i]].job_title + "\n" + "Company : " + job[
+                    choice[i]].company.user.name + "\n" + "Deadline : " + job[
+                        choice[i]].deadline.strftime('%d/%m/%Y')
+            data = {
+                'flag': 1,
+                'email_body': email_body,
+                'email_subject': "Job Alert",
+                'email_id': applicant[i].user.email,
+            }
+            utils.Util.send_email(data)
