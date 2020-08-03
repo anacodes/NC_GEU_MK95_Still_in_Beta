@@ -14,7 +14,9 @@
             <div class="text-center pt-1 pb-2 border-bottom">
               <h1>All Listed Jobs</h1>
             </div>
-            <div class="col-md-12 col-lg-12 font-larger mx-0 px-0">
+            <b-form-select class="col-lg-6" v-model="filter" :options="options_type"></b-form-select>
+            <b-form-select class="col-lg-6" v-model="filter" :options="options_domain"></b-form-select>
+            <div class="table-responsive col-md-12 col-lg-12 font-larger mx-0 px-0">
               <div class="mx-0">
                 <b-row class="mt-0 pt-0 justify-content-end adju">
                   <b-form-group
@@ -25,7 +27,7 @@
                     label-for="filterInput"
                     class="mb-4"
                   >
-                    <b-input-group size="sm">
+                    <b-input-group>
                       <b-form-input
                         v-model="filter"
                         type="search"
@@ -34,7 +36,11 @@
                         placeholder="Type to Search"
                       ></b-form-input>
                       <b-input-group-append>
-                        <b-button :disabled="!filter" @click="filter = ''">Clear</b-button>
+                        <b-button
+                          variant="outline-dark"
+                          :disabled="!filter"
+                          @click="filter = ''"
+                        >Clear</b-button>
                       </b-input-group-append>
                     </b-input-group>
                   </b-form-group>
@@ -105,10 +111,6 @@
                     ></b-pagination>
                   </b-col>
                 </b-row>
-                <!-- Info modal -->
-                <b-modal :id="infoModal.id" :title="infoModal.title" ok-only @hide="resetInfoModal">
-                  <pre>{{ infoModal.content }}</pre>
-                </b-modal>
               </div>
             </div>
           </card>
@@ -119,12 +121,72 @@
 </template>
 <script>
 // Tables
-import SocialTrafficTable from "./Dashboard/SocialTrafficTable";
-import PageVisitsTable from "./Dashboard/PageVisitsTable";
 export default {
+  name: "JobListingsPublic",
+  props: {
+    FILTER: String
+  },
   data() {
     return {
       items: [],
+      selected: null,
+      options_type: [
+        { value: null, text: "Please select job type" },
+        {
+          value: "Internship",
+          text: "Internship"
+        },
+        {
+          value: "Full Time",
+          text: "Full Time"
+        }
+      ],
+      options_domain: [
+        { value: null, text: "Please select your domain" },
+        {
+          value: "Agriculture, Food and Natural Resources",
+          text: "Agriculture, Food and Natural Resources"
+        },
+        {
+          value: "Architecture and Construction",
+          text: "Architecture and Construction"
+        },
+        {
+          value: "Arts, Audio/Video Technology and Communications",
+          text: "Arts, Audio/Video Technology and Communications"
+        },
+        {
+          value: "Business Management and Administration",
+          text: "Business Management and Administration"
+        },
+        { value: "Education and Training", text: "Education and Training" },
+        { value: "Finance", text: "Finance" },
+        {
+          value: "Government and Public Administration",
+          text: "Government and Public Administration"
+        },
+        { value: "Health Science", text: "Health Science" },
+        { value: "Hospitality and Tourism", text: "Hospitality and Tourism" },
+        { value: "Human Services", text: "Human Services" },
+        { value: "Information Technology", text: "Information Technology" },
+        {
+          value: "Law, Public Safety, Corrections and Security",
+          text: "Law, Public Safety, Corrections and Security"
+        },
+        { value: "Manufacturing", text: "Manufacturing" },
+        {
+          value: "Marketing, Sales and Service",
+          text: "Marketing, Sales and Service"
+        },
+        {
+          value: "Science, Technology, Engineering and Mathematics",
+          text: "Science, Technology, Engineering and Mathematics"
+        },
+        {
+          value: "Transportation, Distribution and Logistics",
+          text: "Transportation, Distribution and Logistics"
+        }
+      ],
       fields: [
         {
           key: "id",
@@ -164,7 +226,8 @@ export default {
         {
           key: "send",
           label: "Details",
-          class: "text-center"
+          class: "text-center",
+          sortable: false
         }
       ],
       totalRows: 1,
@@ -175,45 +238,19 @@ export default {
       sortDesc: false,
       sortDirection: "asc",
       filter: null,
-      filterOn: [],
-      infoModal: {
-        id: "info-modal",
-        title: "",
-        content: ""
-      }
+      filterOn: []
     };
   },
   created() {
     // console.log("created call");
     this.fetchData();
+    this.checkData();
   },
-  computed: {
-    sortOptions() {
-      // Create an options list from our fields
-      return this.fields
-        .filter(f => f.sortable)
-        .map(f => {
-          return {
-            text: f.label,
-            value: f.key
-          };
-        });
-    }
-  },
+  computed: {},
   mounted() {
-    // Set the initial number of items
     this.totalRows = this.items.length;
   },
   methods: {
-    info(item, index, button) {
-      this.infoModal.title = `Row index: ${index}`;
-      this.infoModal.content = JSON.stringify(item, null, 2);
-      this.$root.$emit("bv::show::modal", this.infoModal.id, button);
-    },
-    resetInfoModal() {
-      this.infoModal.title = "";
-      this.infoModal.content = "";
-    },
     onFiltered(filteredItems) {
       // Trigger pagination to update the number of buttons/pages due to filtering
       this.totalRows = filteredItems.length;
@@ -242,6 +279,12 @@ export default {
           console.log(error.data);
           this.errors.push(error.data.detail);
         });
+    },
+    checkData() {
+      if (this.FILTER) {
+        console.log(this.FILTER, "recieved this");
+        this.filter = this.FILTER;
+      }
     }
   }
 };
@@ -252,7 +295,6 @@ h2,
 h3 {
   display: inline;
 }
-
 h2 {
   font-weight: 600;
   line-height: 1.2;
@@ -260,7 +302,6 @@ h2 {
 .table td {
   font-size: 1.2rem;
 }
-
 .table thead th {
   font-size: 1.1rem;
   background-color: rgba(222, 226, 230, 0.4);

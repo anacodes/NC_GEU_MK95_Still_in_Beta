@@ -306,7 +306,6 @@ export default {
         fd.append("activate", this.picked);
         fd.append("job_type", this.job_type);
         fd.append("domain", this.domain);
-        // console.log(fd);
 
         this.$store
           .dispatch("JOBCREATE", fd)

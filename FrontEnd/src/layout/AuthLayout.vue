@@ -84,31 +84,60 @@
         <router-view></router-view>
       </slide-y-up-transition>
     </div>
-    <footer class="py-5 bg-default">
-      <div class="container">
-        <div class="row align-items-center justify-content-xl-between">
-          <div class="col-xl-6">
-            <div class="copyright text-center text-xl-left text-muted">
-              &copy; {{year}}
-              <a href class="font-weight-bold ml-1" target="_blank">Still_in_Beta</a>
-            </div>
-          </div>
-          <div class="col-xl-6">
-            <ul class="nav nav-footer justify-content-center justify-content-xl-end">
-              <li class="nav-item">
-                <a href class="nav-link" target="_blank">
-                  About
-                  Us
-                </a>
-              </li>
-              <li class="nav-item">
-                <a href="#" class="nav-link" target="_blank">Job Listings</a>
-              </li>
-            </ul>
-          </div>
+
+  <footer class="mainfooter" role="contentinfo">
+  <div class="footer-middle">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-4 col-sm-6">
+        <!--Column1-->
+        <div class="footer-pad">
+          <h4 class = "text-yellow">Useful Links</h4>
+          <ul class="list-unstyled">
+            <li><a href="#"></a></li>
+            <li><a href="#">Disclaimer</a></li>
+            <li><a href="#">Privacy Policy</a></li>
+            <li><a href="#">Sitemap</a></li>
+            <li><a href="#">FAQs</a></li>
+          </ul>
         </div>
       </div>
-    </footer>
+      <div class="col-md-4 col-sm-6">
+        <!--Column1-->
+        <div class="footer-pad">
+          <h4 class = "text-yellow">Updates</h4>
+          <ul class="list-unstyled">
+            <li><a href="#">Job Listings</a></li>
+            <li><a href="#">News and Updates</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="col-md-4 col-sm-6">
+        <!--Column1-->
+        <div class="footer-pad">
+          <h4 class = "text-yellow">Sitemap</h4>
+          <ul class="list-unstyled">
+            <li><a href="#">About Us</a></li>
+            <li><a href="#">Contact Us</a></li>
+            <li><a href="#">Website Policy</a></li>
+            <li>
+              <a href="#"></a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+	<div class="row">
+		<div class="col-md-12 copy">
+			<p class="text-center">&copy; Copyright 2020 - Still_in_Beta.  All rights reserved.</p>
+		</div>
+	</div>
+
+
+  </div>
+  </div>
+</footer>
+
   </div>
 </template>
 
@@ -148,5 +177,33 @@ export default {
   }
 };
 </script>
-<style>
+<style scoped>
+footer {
+  background: #16222A;
+  color: white;
+  margin-top:100px;
+}
+
+footer a {
+  color: #fff;
+  font-size: 14px;
+  transition-duration: 0.2s;
+}
+
+footer a:hover {
+  color: #FA944B;
+  text-decoration: none;
+}
+
+.copy {
+  font-size: 12px;
+  padding: 10px;
+  border-top: 1px solid #FFFFFF;
+}
+
+.footer-middle {
+  padding-top: 2em;
+  color: white;
+}
+
 </style>

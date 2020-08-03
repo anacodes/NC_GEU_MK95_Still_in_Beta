@@ -86,8 +86,8 @@
                     <base-input
                       v-model="website"
                       alternative
-                      label="Website"
-                      placeholder="www.abc.com"
+                      label="Website (include https://)"
+                      placeholder="https://www.abc.com"
                       input-classes="form-control-alternative"
                     />
                   </div>
@@ -112,15 +112,14 @@
                   </div>
                 </div>
                 <div v-if="errors.length" class="mt-4">
-                <b>Please correct the following error(s):</b>
-                <!-- <ul> -->
+                  <b>Please correct the following error(s):</b>
+                  <!-- <ul> -->
                   <li class="text-red" v-for="error in errors" :key="error.id">{{ error }}</li>
-                <!-- </ul> -->
-              </div>
+                  <!-- </ul> -->
+                </div>
                 <div class="text-center">
                   <base-button type="primary" nativeType="submit" class="my-4">Save Profile</base-button>
                 </div>
-                
               </form>
             </template>
           </card>
@@ -154,7 +153,6 @@ export default {
   methods: {
     onLogoUpload() {
       this.logo = this.$refs.file.files[0];
-      // console.log("zala ka upload",  this.$refs.file.files)
     },
     onSubmit() {
       this.errors = [];
@@ -168,7 +166,6 @@ export default {
         fd.append("website", this.website);
         fd.append("bio", this.about);
         fd.append("logo", this.logo);
-        // console.log(fd);
 
         this.$store
           .dispatch("RECREGISTRATION", fd)
@@ -182,22 +179,24 @@ export default {
       }
     },
     valid() {
-      if(!this.address){
-        this.errors.push("Address line is empty.")
+      if (!this.address) {
+        this.errors.push("Address line is empty.");
       }
-      if(this.address.length>40){
+      if (this.address.length > 40) {
         this.errors.push("Address length exceeds 40.");
       }
       var mob = new RegExp("^[1-9][0-9]{9}$");
-      if(!(mob.test(this.mobile))){
+      if (!mob.test(this.mobile)) {
         this.errors.push("Please enter correct mobile number.");
       }
       var dis_name = new RegExp("^[A-Za-z0-9]+$");
-      if(!(dis_name.test(this.displayname))){
+      if (!dis_name.test(this.displayname)) {
         this.errors.push("Whitespace is not allowed in the display name.");
       }
-      var pan_type = new RegExp("^[A-Z]{3}[P|C|H|A|B|G|J|L|F|T][A-Z][000[1-9]|00[1-9][0-9]|0[1-9][0-9][0-9]|[1-9][0-9][0-9][0-9]][A-Z]$");
-      if(!(pan_type.test(this.pan))){
+      var pan_type = new RegExp(
+        "^[A-Z]{3}[P|C|H|A|B|G|J|L|F|T][A-Z][000[1-9]|00[1-9][0-9]|0[1-9][0-9][0-9]|[1-9][0-9][0-9][0-9]][A-Z]$"
+      );
+      if (!pan_type.test(this.pan)) {
         this.errors.push("Invalid PAN Number");
       }
       // var web_type = new RegExp("^(https?:\/\/)?(www\.)?([a-zA-Z0-9]+(-?[a-zA-Z0-9])*\.)+[\w]{2,}(\/\S*)?$");
@@ -207,7 +206,7 @@ export default {
       if (!this.logo) {
         this.errors.push("Please upload your logo");
       }
-      if(!this.about){
+      if (!this.about) {
         this.errors.push("You should complete About the Company field.");
       }
       if (!this.errors.length) {

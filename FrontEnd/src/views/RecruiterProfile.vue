@@ -126,7 +126,7 @@
                       <base-input
                         v-model="website"
                         alternative
-                        label="Website"
+                        label="Website (include https://)"
                         placeholder="abc.com"
                         input-classes="form-control-alternative"
                       />

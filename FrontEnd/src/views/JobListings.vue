@@ -135,6 +135,10 @@
 import SocialTrafficTable from "./Dashboard/SocialTrafficTable";
 import PageVisitsTable from "./Dashboard/PageVisitsTable";
 export default {
+  name: "JobListings",
+  props: {
+    FILTER: String
+  },
   data() {
     return {
       items: [],
@@ -199,6 +203,7 @@ export default {
   created() {
     // console.log("created call");
     this.fetchData();
+    this.checkData();
   },
   computed: {
     sortOptions() {
@@ -236,7 +241,6 @@ export default {
       this.$store
         .dispatch("JSJOBS")
         .then(success => {
-          console.log("fetch called");
           // console.log(success);
           for (var i = 0; i < success.length; i++) {
             var arr = {};
@@ -255,6 +259,11 @@ export default {
           console.log(error.data);
           this.errors.push(error.data.detail);
         });
+    },
+    checkData() {
+      if (this.FILTER) {
+        this.filter = this.FILTER;
+      }
     }
   }
 };

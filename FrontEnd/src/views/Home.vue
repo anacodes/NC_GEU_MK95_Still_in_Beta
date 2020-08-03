@@ -19,6 +19,12 @@
             <div class="col-md-6"></div>
           </div>
         </b-carousel-slide>
+        <b-carousel-slide img-src="../../public/img/bg/guide.jpg">
+          <div class="row">
+            <div class="col-md-6"></div>
+            <div class="col-md-6"></div>
+          </div>
+        </b-carousel-slide>
       </b-carousel>
       <br />
       <br />
@@ -27,7 +33,11 @@
       <div class="row mb-4">
         <div class="col-xs-6 col-sm-4 col-md-3">
           <div class="thumbnail">
-            <a href="#" class>
+            <router-link
+              :to="{ name: 'JobListingsPublic', 
+                            params: { FILTER: 'Information Technology'}
+                          }"
+            >
               <div class="caption">
                 <h3 class="text-black mt-6">Information Technology</h3>
               </div>
@@ -36,12 +46,16 @@
                 alt="..."
                 class="img-thumbnail"
               />
-            </a>
+            </router-link>
           </div>
         </div>
         <div class="col-xs-6 col-sm-4 col-md-3">
           <div class="thumbnail">
-            <a href="#" class>
+            <router-link
+              :to="{ name: 'JobListingsPublic', 
+                            params: { FILTER: 'Agriculture, Food and Natural Resources'}
+                          }"
+            >
               <div class="caption">
                 <h3 class="text-black mt-6">Agriculture, Food and Natural Resources</h3>
               </div>
@@ -50,12 +64,16 @@
                 alt="..."
                 class="img-thumbnail"
               />
-            </a>
+            </router-link>
           </div>
         </div>
         <div class="col-xs-6 col-sm-4 col-md-3">
           <div class="thumbnail">
-            <a href="#" class>
+            <router-link
+              :to="{ name: 'JobListingsPublic', 
+                            params: { FILTER: 'Government and Public Administration'}
+                          }"
+            >
               <div class="caption">
                 <h3 class="text-black mt-6">Government and Public Administration</h3>
               </div>
@@ -64,12 +82,16 @@
                 alt="..."
                 class="img-thumbnail"
               />
-            </a>
+            </router-link>
           </div>
         </div>
         <div class="col-xs-6 col-sm-4 col-md-3">
           <div class="thumbnail">
-            <a href="#" class>
+            <router-link
+              :to="{ name: 'JobListingsPublic', 
+                            params: { FILTER: 'Marketing, Sales and Service'}
+                          }"
+            >
               <div class="caption">
                 <h3 class="text-black mt-6">Marketing, Sales and Service</h3>
               </div>
@@ -78,7 +100,7 @@
                 alt="..."
                 class="img-thumbnail"
               />
-            </a>
+            </router-link>
           </div>
         </div>
       </div>
@@ -86,7 +108,11 @@
       <div class="row mb-4">
         <div class="col-xs-6 col-sm-4 col-md-3">
           <div class="thumbnail">
-            <a href="#" class>
+            <router-link
+              :to="{ name: 'JobListingsPublic', 
+                            params: { FILTER: 'Finance'}
+                          }"
+            >
               <div class="caption">
                 <h3 class="text-black mt-6">Finance</h3>
               </div>
@@ -95,12 +121,16 @@
                 alt="..."
                 class="img-thumbnail"
               />
-            </a>
+            </router-link>
           </div>
         </div>
         <div class="col-xs-6 col-sm-4 col-md-3">
           <div class="thumbnail">
-            <a href="#" class>
+            <router-link
+              :to="{ name: 'JobListingsPublic', 
+                            params: { FILTER: 'Science, Technology, Engineering and Mathematics'}
+                          }"
+            >
               <div class="caption">
                 <h3 class="text-black mt-6">Science, Technology, Engineering and Mathematics</h3>
               </div>
@@ -109,12 +139,16 @@
                 alt="..."
                 class="img-thumbnail"
               />
-            </a>
+            </router-link>
           </div>
         </div>
         <div class="col-xs-6 col-sm-4 col-md-3">
           <div class="thumbnail">
-            <a href="#" class>
+            <router-link
+              :to="{ name: 'JobListingsPublic', 
+                            params: { FILTER: 'Education and Training'}
+                          }"
+            >
               <div class="caption">
                 <h3 class="text-black mt-6">Education and Training</h3>
               </div>
@@ -123,12 +157,16 @@
                 alt="..."
                 class="img-thumbnail"
               />
-            </a>
+            </router-link>
           </div>
         </div>
         <div class="col-xs-6 col-sm-4 col-md-3">
           <div class="thumbnail">
-            <a href="#" class>
+            <router-link
+              :to="{ name: 'JobListingsPublic', 
+                            params: { FILTER: ''}
+                          }"
+            >
               <div class="caption">
                 <h3 class="text-black mt-6">Other..</h3>
               </div>
@@ -137,7 +175,7 @@
                 alt="..."
                 class="img-thumbnail"
               />
-            </a>
+            </router-link>
           </div>
         </div>
       </div>
@@ -190,6 +228,21 @@
             class="mb-2"
           >
             <b-card-text>Engineer wih extra-ordinary skills in DSA required for Software position at Bangalore.</b-card-text>
+
+            <b-button href="#" variant="primary">View Job</b-button>
+          </b-card>
+        </div>
+        <div class="col-md-3">
+          <b-card
+            title="Public Relations"
+            img-src="../../public/img/theme/jio_logo.png"
+            img-alt="Image"
+            img-top
+            tag="article"
+            style="max-width: 20rem;"
+            class="mb-2"
+          >
+            <b-card-text>Experienced public relations manager (atleast 4 years) required for Mumbai Office. Apply now!</b-card-text>
 
             <b-button href="#" variant="primary">View Job</b-button>
           </b-card>

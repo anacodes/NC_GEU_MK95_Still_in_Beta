@@ -113,7 +113,7 @@ export default {
   methods: {
     checkData() {
       if (!this.myJob) {
-        alert("run run run away");
+        alert("not recieved job");
         this.$router.push("/");
       } else {
         this.job.title = this.myJob.job_title;

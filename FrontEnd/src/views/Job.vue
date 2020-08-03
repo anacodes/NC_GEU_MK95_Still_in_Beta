@@ -106,14 +106,14 @@ import PageVisitsTable from "./Dashboard/PageVisitsTable";
 export default {
   name: "job_jobseeker",
   props: {
-    myJob: Object,
+    myJob: Object
   },
   created() {
     this.checkData();
   },
   data() {
     return {
-      job: {},
+      job: {}
     };
   },
   methods: {
@@ -142,26 +142,26 @@ export default {
         this.job.domain = this.myJob.domain;
       }
     },
-    checkJD: function () {
+    checkJD: function() {
       window.open(this.job.jd, "_blank");
     },
 
     apply() {
       this.$store
         .dispatch("APPLYJOB", {
-          jobid: this.job.jobid,
+          jobid: this.job.jobid
         })
-        .then((success) => {
+        .then(success => {
           var msg = "Hi you've succesfully applied ";
           this.$swal(msg, "check your dashboard", "success");
           this.$router.push("/jobseeker");
         })
-        .catch((error) => {
+        .catch(error => {
           console.log(error.data);
           this.errors.push(...error.data);
         });
-    },
-  },
+    }
+  }
 };
 </script>
 <style>

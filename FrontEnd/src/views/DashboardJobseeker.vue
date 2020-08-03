@@ -5,35 +5,12 @@
       <div class="row">
         <div class="col-xl-3 col-lg-6">
           <stats-card
-            title="Total Jobs"
+            title="Jobs Applied"
             type="gradient-info"
-            sub-title="350,897"
+            :sub-title="total_jobs"
             icon="ni ni-briefcase-24"
             class="mb-4 mb-xl-0"
-          >
-            <template slot="footer">
-              <span class="text-success mr-2">
-                <i class="fa fa-arrow-up"></i> 3.48%
-              </span>
-              <span class="text-nowrap">Since last month</span>
-            </template>
-          </stats-card>
-        </div>
-        <div class="col-xl-3 col-lg-6">
-          <stats-card
-            title="Jobs Applied"
-            type="gradient-primary"
-            sub-title="2,356"
-            icon="ni ni-settings"
-            class="mb-4 mb-xl-0"
-          >
-            <template slot="footer">
-              <span class="text-success mr-2">
-                <i class="fa fa-arrow-up"></i> 12.18%
-              </span>
-              <span class="text-nowrap">Since last month</span>
-            </template>
-          </stats-card>
+          ></stats-card>
         </div>
       </div>
     </base-header>
@@ -284,6 +261,7 @@ export default {
     return {
       decided: [],
       pending: [],
+      total_jobs: "",
       fields: [
         {
           key: "id",
@@ -403,7 +381,6 @@ export default {
     // Set the initial number of items
     this.totalRows = this.pending.length;
     this.totalRowsB = this.decided.length;
-    
   },
   methods: {
     info(item, index, button) {
@@ -426,6 +403,7 @@ export default {
         .dispatch("JSDASHBOARD")
         .then(success => {
           console.log("fetch called");
+          this.total_jobs = success.length.toString();
           for (var i = 0; i < success.length; i++) {
             var arr = {};
             const obj = success[i].job_applied_to;
@@ -437,7 +415,7 @@ export default {
               arr.status = "pending";
               this.pending.push(arr);
             } else {
-              if(success[i].status == 1) arr.status = "selected";
+              if (success[i].status == 1) arr.status = "selected";
               else arr.status = "rejected";
               this.decided.push(arr);
             }

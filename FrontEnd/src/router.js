@@ -64,7 +64,7 @@ const routes = [
       },
       {
         path: 'joblistings',
-        name: 'joblist_jobseeker',
+        name: 'JobListings',
         component: () => import('./views/JobListings.vue'),
         meta: {
           requiresAuth: true,
@@ -178,7 +178,8 @@ const routes = [
       },
       {
         path: '/joblistings',
-        name: 'joblist_public',
+        name: 'JobListingsPublic',
+        props: true,
         component: () => import('./views/JobListingsPublic.vue')
       },
       {

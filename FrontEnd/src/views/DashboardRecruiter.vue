@@ -354,7 +354,6 @@ export default {
     Loading
   },
   created() {
-    // console.log("created call");
     this.fetchData();
   },
   data() {
