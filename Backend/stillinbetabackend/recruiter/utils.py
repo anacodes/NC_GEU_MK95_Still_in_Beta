@@ -15,11 +15,10 @@ class Util:
             html_content = render_to_string("googlecalender.html", {
                 'email_body': data['email_body'],
             })
-        # else:
-        #     html_content = render_to_string("resetpassword.html", {
-        #         'buttonlink': data['email_body'],
-        #         'verifylink': data['email_body']
-        #     })
+        else:
+            html_content = render_to_string("recommendation.html", {
+                'email_body': data['email_body'],
+            })
         text_content = strip_tags(html_content)
         email = EmailMultiAlternatives(data['email_subject'], text_content,
                                        settings.EMAIL_HOST_USER,
