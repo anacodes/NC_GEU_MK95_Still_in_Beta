@@ -30,7 +30,7 @@
               </div>
               <div>
                 <i class="ni education_hat mr-2"></i>
-                {{arr.website}}
+                <b-button :href="arr.website">Website</b-button>
               </div>
             </div>
             <div class="mt-4 py-4 border-top text-center">

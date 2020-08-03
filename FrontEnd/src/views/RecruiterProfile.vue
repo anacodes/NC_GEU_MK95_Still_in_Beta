@@ -7,7 +7,7 @@
       <div class="container-fluid align-items-center">
         <div class="row">
           <div class="col-lg-7 col-md-10">
-            <h1 class="display-2 text-white">Hello, {{Name}}</h1>
+            <h1 class="display-2 text-white">Hello,<br> {{Name}}</h1>
             <p
               class="text-white mt-0 mb-5"
             >This is your profile page. You can see the details of your company and edit them here.</p>
@@ -24,7 +24,7 @@
               <div class="col-lg-3 order-lg-2">
                 <div class="card-profile-image">
                   <a href="#">
-                    <img src="../../public/img/theme/team-4-800x800.jpg" class="rounded-circle" />
+                    <img :src="logo" class="circle" />
                   </a>
                 </div>
               </div>
@@ -315,7 +315,7 @@ export default {
       if (!this.errors.length) {
         return true;
       } else {
-        console.log(this.errors);
+        return false
       }
     },
     logout: function() {

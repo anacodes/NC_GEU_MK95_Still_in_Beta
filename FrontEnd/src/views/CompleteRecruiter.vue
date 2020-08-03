@@ -111,7 +111,7 @@
                     </div>
                   </div>
                 </div>
-                <div v-if="errors.length" class="text-center">
+                <div v-if="errors.length" class="mt-4">
                 <b>Please correct the following error(s):</b>
                 <!-- <ul> -->
                   <li class="text-red" v-for="error in errors" :key="error.id">{{ error }}</li>

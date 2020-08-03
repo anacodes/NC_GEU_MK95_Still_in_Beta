@@ -157,7 +157,7 @@
                 <div class="row pl-lg-4">
                   <div class="col-12">
                     <div class="form-group">
-                      <base-input alternative label="Skills">
+                      <base-input alternative label="Skills (Comma separated)">
                         <textarea
                           v-model="skills"
                           rows="4"
@@ -166,7 +166,7 @@
                         ></textarea>
                       </base-input>
                     </div>
-                <div v-if="errors.length" class="text-center mt-4">
+                <div v-if="errors.length" class="mt-4">
                 <b>Please correct the following error(s):</b>
                   <ul>
                     <li class="text-red" v-for="error in errors" :key="error.id">{{ error }}</li>

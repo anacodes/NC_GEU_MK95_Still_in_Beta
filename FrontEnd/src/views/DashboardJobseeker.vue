@@ -82,7 +82,6 @@
                 <!-- Main table element -->
                 <b-table
                   show-empty
-                  small
                   stacked="md"
                   :items="pending"
                   :fields="fields"
@@ -196,7 +195,6 @@
                 <!-- Main table element -->
                 <b-table
                   show-empty
-                  small
                   stacked="md"
                   :items="decided"
                   :fields="fieldsB"
@@ -284,18 +282,7 @@ export default {
   },
   data() {
     return {
-      decided: [
-        {
-          id: "1524",
-          status: "rejected",
-          age: 40,
-          title: "konsa Developer",
-          location: "Mumbai",
-          applicants: "5000",
-          link: "Check",
-          company: "Google"
-        }
-      ],
+      decided: [],
       pending: [],
       fields: [
         {
@@ -415,6 +402,8 @@ export default {
   mounted() {
     // Set the initial number of items
     this.totalRows = this.pending.length;
+    this.totalRowsB = this.decided.length;
+    
   },
   methods: {
     info(item, index, button) {

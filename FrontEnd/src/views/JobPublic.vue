@@ -8,12 +8,12 @@
     >
       <div class="border-bottom pb-2">
         <div class="row">
-          <div class="col-lg-9 col-md-9 col-lg-6">
+          <div class="col-md-9 col-lg-9">
             <h1>{{job.title}}</h1>
             <br />
             <h3>
               <i class="ni ni-pin-3"></i>
-              {{job.company_name}} {{job.location}}
+              {{job.company_name}}, {{job.location}}
             </h3>
             <br />
           </div>
@@ -26,33 +26,33 @@
           </div>
         </div>
         <div class="row mt-3">
-          <div class="col-lg-3 col-md-6 col-sm-6 mt-3 text-center">
+          <div class="col-lg-3 col-md-6 col-sm-6 mt-3">
             <h2>
               <i class="ni ni-calendar-grid-58"></i> Deadline
             </h2>
             <br />
             {{job.deadline}}
           </div>
-          <div class="col-lg-3 col-md-6 col-sm-6 mt-3 text-center">
+          <div class="col-lg-3 col-md-6 col-sm-6 mt-3">
             <h2>
               <i class="ni ni-credit-card"></i> Payscale
             </h2>
             <br />
             {{job.payscale}}
           </div>
-          <div class="col-lg-3 col-md-6 col-sm-6 mt-3 text-center">
+          <div class="col-lg-3 col-md-6 col-sm-6 mt-3">
             <h2>
               <i class="ni ni-single-copy-04"></i> Vacancies
             </h2>
             <br />
             {{job.vacancy}}
           </div>
-          <div class="col-lg-3 col-md-6 col-sm-6 mt-3 text-center">
+          <div class="col-lg-3 col-md-6 col-sm-6 mt-3">
             <h2>
               <i class="ni ni-credit-card"></i> Job Type
             </h2>
             <br />
-            {{job.payscale}}
+            {{job.job_type}}
           </div>
         </div>
       </div>
@@ -97,17 +97,17 @@ import Job from "../components/Job";
 export default {
   name: "JobPublic",
   props: {
-    myJob: Object
+    myJob: Object,
   },
   components: {
-    Job
+    Job,
   },
   created() {
     this.checkData();
   },
   data() {
     return {
-      job: {}
+      job: {},
     };
   },
   methods: {
@@ -134,10 +134,10 @@ export default {
         this.job.domain = this.myJob.domain;
       }
     },
-    checkJD: function() {
+    checkJD: function () {
       window.open(this.job.jd, "_blank");
-    }
-  }
+    },
+  },
 };
 </script>
 <style>

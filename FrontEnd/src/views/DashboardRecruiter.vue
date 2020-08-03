@@ -10,46 +10,24 @@
             sub-title="350,897"
             icon="ni ni-briefcase-24"
             class="mb-4 mb-xl-0"
-          >
-            <template slot="footer">
-              <span class="text-success mr-2">
-                <i class="fa fa-arrow-up"></i> 3.48%
-              </span>
-              <span class="text-nowrap">Since last month</span>
-            </template>
-          </stats-card>
+          ></stats-card>
         </div>
-        <div class="col-xl-3 col-lg-6">
-          <stats-card
-            title="Total Jobs"
-            type="gradient-info"
-            sub-title="350,897"
-            icon="ni ni-briefcase-24"
-            class="mb-4 mb-xl-0"
-          >
-            <template slot="footer">
-              <span class="text-success mr-2">
-                <i class="fa fa-arrow-up"></i> 3.48%
-              </span>
-              <span class="text-nowrap">Since last month</span>
-            </template>
-          </stats-card>
+        <div class="col-xl-4 col-lg-8">
+          <base-input
+            v-model="googleauth"
+            alternative
+            type="text"
+            placeholder="Google Auth"
+            label = "Google Auth"
+          ></base-input>
+          <div class = "row">
+          <div class = "mx-2">
+          <base-button type="success">Authenticate</base-button>
         </div>
-        <div class="col-xl-3 col-lg-6">
-          <stats-card
-            title="Total Jobs"
-            type="gradient-info"
-            sub-title="350,897"
-            icon="ni ni-briefcase-24"
-            class="mb-4 mb-xl-0"
-          >
-            <template slot="footer">
-              <span class="text-success mr-2">
-                <i class="fa fa-arrow-up"></i> 3.48%
-              </span>
-              <span class="text-nowrap">Since last month</span>
-            </template>
-          </stats-card>
+        <div>
+          <base-button type="secondary">Authagain</base-button>
+        </div>
+        </div>
         </div>
       </div>
     </base-header>
@@ -72,9 +50,8 @@
                 <!-- Main table element -->
                 <b-table
                   show-empty
-                  small
                   stacked="md"
-                  :items="itemsA"
+                  :items="active"
                   :fields="fieldsA"
                   :current-page="currentPageA"
                   :per-page="perPageA"
@@ -94,15 +71,20 @@
                       </ul>
                     </b-card>
                   </template>
-                  <template v-slot:cell(link)="row">
+                  <template v-slot:cell(link)="link">
                     <!-- add function -->
-                    <b-button
-                      size="md"
-                      pill
-                      variant="outline-secondary"
-                      class="mr-1 my-0 py-0 black"
-                      href="/recruiter/jobdetails"
-                    >Check Details</b-button>
+                    <router-link
+                      :to="{ name: 'JobRecruiter', 
+                            params: { myJob: link.item.send}
+                          }"
+                    >
+                      <b-button
+                        size="md"
+                        pill
+                        variant="outline-dark"
+                        class="mr-1 my-0 py-0 black"
+                      >VIew Details</b-button>
+                    </router-link>
                   </template>
                 </b-table>
 
@@ -169,9 +151,8 @@
                 <!-- Main table element -->
                 <b-table
                   show-empty
-                  small
                   stacked="md"
-                  :items="itemsB"
+                  :items="deactive"
                   :fields="fieldsB"
                   :current-page="currentPageB"
                   :per-page="perPageB"
@@ -191,14 +172,20 @@
                       </ul>
                     </b-card>
                   </template>
-                  <template v-slot:cell(link)="row">
-                    <b-button
-                      size="md"
-                      pill
-                      variant="outline-secondary"
-                      class="mr-1 my-0 py-0 black"
-                      href="/recruiter/jobdetails"
-                    >Check Details</b-button>
+                  <template v-slot:cell(link)="link">
+                    <!-- add function -->
+                    <router-link
+                      :to="{ name: 'JobRecruiter', 
+                            params: { myJob: link.item.send}
+                          }"
+                    >
+                      <b-button
+                        size="md"
+                        pill
+                        variant="outline-dark"
+                        class="mr-1 my-0 py-0 black"
+                      >VIew Details</b-button>
+                    </router-link>
                   </template>
                 </b-table>
 
@@ -265,9 +252,8 @@
                 <!-- Main table element -->
                 <b-table
                   show-empty
-                  small
                   stacked="md"
-                  :items="itemsC"
+                  :items="history"
                   :fields="fieldsC"
                   :current-page="currentPageC"
                   :per-page="perPageC"
@@ -287,14 +273,20 @@
                       </ul>
                     </b-card>
                   </template>
-                  <template v-slot:cell(link)="row">
-                    <b-button
-                      size="md"
-                      pill
-                      variant="outline-secondary"
-                      class="mr-1 my-0 py-0 black"
-                      href="/recruiter/jobdetails"
-                    >Check Details</b-button>
+                  <template v-slot:cell(link)="link">
+                    <!-- add function -->
+                    <router-link
+                      :to="{ name: 'JobRecruiter', 
+                            params: { myJob: link.item.send}
+                          }"
+                    >
+                      <b-button
+                        size="md"
+                        pill
+                        variant="outline-dark"
+                        class="mr-1 my-0 py-0 black"
+                      >VIew Details</b-button>
+                    </router-link>
                   </template>
                 </b-table>
 
@@ -359,70 +351,41 @@ import PageVisitsTable from "./Dashboard/PageVisitsTable";
 export default {
   created() {
     // console.log("created call");
-    // this.fetchData();
+    this.fetchData();
   },
   data() {
     return {
       active: [],
       deactive: [],
       history: [],
-      itemsA: [
-        {
-          id: "1524",
-          title: "Delhi Developer",
-          location: "Mumbai",
-          applicants: "5000"
-        },
-        {
-          id: "1584",
-          title: "Yes Engineer",
-          location: "Delhi",
-          applicants: "7000"
-        }
-      ],
-      itemsB: [
-        {
-          id: "1524",
-          title: "Delhi Developer",
-          location: "Mumbai",
-          applicants: "5000"
-        }
-      ],
-      itemsC: [
-        {
-          id: "1524",
-          title: "Delhi Developer",
-          location: "Mumbai",
-          applicants: "5000"
-        }
-      ],
+
       fieldsA: [
         {
           key: "id",
           label: "Job ID",
           sortable: true,
           sortDirection: "asc",
-          class: "text-center"
+          class: "text-center",
         },
         {
           key: "title",
           label: "Job Title",
           sortable: true,
           sortDirection: "asc",
-          class: "text-center"
+          class: "text-center",
         },
         {
           key: "location",
           label: "Location",
           sortable: true,
           sortDirection: "asc",
-          class: "text-center"
+          class: "text-center",
         },
         {
           key: "link",
           label: "Details",
-          class: "text-center"
-        }
+          class: "text-center",
+        },
       ],
       fieldsB: [
         {
@@ -430,28 +393,28 @@ export default {
           label: "Job ID",
           sortable: true,
           sortDirection: "asc",
-          class: "text-center"
+          class: "text-center",
         },
         {
           key: "title",
           label: "Job Title",
           sortable: true,
           sortDirection: "asc",
-          class: "text-center"
+          class: "text-center",
         },
         {
           key: "location",
           label: "Location",
           sortable: true,
           sortDirection: "asc",
-          class: "text-center"
+          class: "text-center",
         },
 
         {
           key: "link",
           label: "Details",
-          class: "text-center"
-        }
+          class: "text-center",
+        },
       ],
       fieldsC: [
         {
@@ -459,28 +422,28 @@ export default {
           label: "Job ID",
           sortable: true,
           sortDirection: "asc",
-          class: "text-center"
+          class: "text-center",
         },
         {
           key: "title",
           label: "Job Title",
           sortable: true,
           sortDirection: "asc",
-          class: "text-center"
+          class: "text-center",
         },
         {
           key: "location",
           label: "Location",
           sortable: true,
           sortDirection: "asc",
-          class: "text-center"
+          class: "text-center",
         },
 
         {
           key: "link",
           label: "Details",
-          class: "text-center"
-        }
+          class: "text-center",
+        },
       ],
       totalRowsA: 1,
       currentPageA: 1,
@@ -494,7 +457,7 @@ export default {
       infoModalA: {
         id: "info-modalA",
         title: "",
-        content: ""
+        content: "",
       },
       totalRowsB: 1,
       currentPageB: 1,
@@ -508,7 +471,7 @@ export default {
       infoModalB: {
         id: "info-modal",
         title: "",
-        content: ""
+        content: "",
       },
       totalRowsC: 1,
       currentPageC: 1,
@@ -522,28 +485,28 @@ export default {
       infoModalC: {
         id: "info-modal",
         title: "",
-        content: ""
-      }
+        content: "",
+      },
     };
   },
   computed: {
     sortOptions() {
       // Create an options list from our fields
       return this.fields
-        .filter(f => f.sortable)
-        .map(f => {
+        .filter((f) => f.sortable)
+        .map((f) => {
           return {
             text: f.label,
-            value: f.key
+            value: f.key,
           };
         });
-    }
+    },
   },
   mounted() {
     // Set the initial number of items
-    this.totalRowsA = this.itemsA.length;
-    this.totalRowsB = this.itemsB.length;
-    this.totalRowsC = this.itemsC.length;
+    this.totalRowsA = this.active.length;
+    this.totalRowsB = this.deactive.length;
+    this.totalRowsC = this.history.length;
   },
   methods: {
     info(item, index, button) {
@@ -574,7 +537,7 @@ export default {
     fetchData() {
       this.$store
         .dispatch("RECDASHBOARD")
-        .then(success => {
+        .then((success) => {
           console.log("fetch called");
           // console.log(success);
           for (var i = 0; i < success.length; i++) {
@@ -592,12 +555,12 @@ export default {
             }
           }
         })
-        .catch(error => {
+        .catch((error) => {
           console.log(error.data);
           this.errors.push(error.data.detail);
         });
-    }
-  }
+    },
+  },
 };
 </script>
 <style>

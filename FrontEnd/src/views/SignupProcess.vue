@@ -27,7 +27,20 @@ export default {
     };
   },
   created() {
-    
+    const tkn = this.$route.query.token;
+    this.$store
+      .dispatch("AUTHENTICATE", {
+        token: tkn,
+      })
+      .then(({ status }) => {
+        this.token_got = tkn;
+      })
+      .catch((error) => {
+        // there was some error
+        // token cannot be authorized
+        alert("some error occured");
+        console.log(error);
+      });
   },
   methods: {},
 };

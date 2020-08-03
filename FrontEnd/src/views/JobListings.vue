@@ -1,22 +1,26 @@
 <template>
   <div>
+    <base-header class="header pb-5 pt-7 pt-lg-8 d-flex align-items-center">
+      <span class="mask bg-gradient-info opacity-8"></span>
+    </base-header>
+
     <!-- card start -->
 
-    <div>
+    <div class="container-fluid mt--7">
       <div class="row">
-        <div class="col-xl-12 order-xl-2 mb-5 mb-xl-0 mx-auto">
+        <div class="col-xl-12 order-xl-2 mb-5 mb-xl-0">
           <card
             type="secondary"
             shadow
             header-classes="bg-white"
-            class="border-0 mb-4 mt-sm-5 mt-md-5 mt-lg-2 mx-0"
+            class="border-0 mb-4 mt-sm-5 mt-md-5 mt-lg-2"
           >
             <div class="text-center pt-1 pb-2 border-bottom">
               <h1>All Listed Jobs</h1>
             </div>
-            <div class="col-md-12 col-lg-12 font-larger mx-0 px-0">
-              <div class="mx-0">
-                <b-row class="mt-0 pt-0 justify-content-end adju">
+            <div class="table-responsive col-md-12 col-lg-12 font-larger">
+              <div class="mx-1">
+                <b-row class="mt-0 pt-0 justify-content-end">
                   <b-form-group
                     label
                     label-cols-lg="12"
@@ -55,10 +59,19 @@
                   :sort-direction="sortDirection"
                   @filtered="onFiltered"
                 >
+                  <template v-slot:cell(name)="row">{{ row.value.first }} {{ row.value.last }}</template>
+                  <template v-slot:row-details="row">
+                    <b-card>
+                      <ul>
+                        <li v-for="(value, key) in row.item" :key="key">{{ key }}: {{ value }}</li>
+                      </ul>
+                    </b-card>
+                  </template>
+
                   <template v-slot:cell(send)="send">
                     <!-- add function -->
                     <router-link
-                      :to="{ name: 'JobPublic', 
+                      :to="{ name: 'job_jobseeker', 
                             params: { myJob: send.item.send}
                           }"
                     >
@@ -67,7 +80,7 @@
                         pill
                         variant="outline-dark"
                         class="mr-1 my-0 py-0 black"
-                      >View more</b-button>
+                      >Apply</b-button>
                     </router-link>
                   </template>
                 </b-table>
@@ -93,7 +106,7 @@
                     </b-form-group>
                   </b-col>
                 </b-row>
-                <b-row class="mt-2 pt-0 justify-content-center">
+                <b-row class="mt-2 pt-0 justify-content-end">
                   <b-col sm="12" md="12" lg="12" xl="6" class="my-1">
                     <b-pagination
                       v-model="currentPage"
@@ -101,7 +114,7 @@
                       :per-page="perPage"
                       align="center"
                       size="md"
-                      class="my-0 justify-content-end"
+                      class="my-0"
                     ></b-pagination>
                   </b-col>
                 </b-row>
@@ -221,7 +234,7 @@ export default {
     },
     fetchData() {
       this.$store
-        .dispatch("PUBLICJOBS")
+        .dispatch("JSJOBS")
         .then(success => {
           console.log("fetch called");
           // console.log(success);
@@ -232,9 +245,9 @@ export default {
             arr.location = success[i].location;
             arr.title = success[i].job_title;
             arr.id = success[i].jobid;
-            arr.send = success[i];
             arr.domain = success[i].domain;
             arr.jobtype = success[i].job_type;
+            arr.send = success[i];
             this.items.push(arr);
           }
         })
@@ -255,7 +268,10 @@ h3 {
 
 h2 {
   font-weight: 600;
-  line-height: 1.2;
+  line-height: 2;
+}
+p {
+  font-size: 1.1rem;
 }
 .table td {
   font-size: 1.2rem;
@@ -265,14 +281,16 @@ h2 {
   font-size: 1.1rem;
   background-color: rgba(222, 226, 230, 0.4);
 }
-.adju {
-  margin-right: 0px;
-}
 .black {
-  color: #525f7f;
-  border-color: #525f7f;
+  border-color: #4385b1;
+  color: #4385b1;
+  font-weight: bold;
 }
-.container {
-  padding: 0px;
+.green {
+  border-color: green;
+  color: green;
+}
+.asd {
+  font-size: 200px !important;
 }
 </style>

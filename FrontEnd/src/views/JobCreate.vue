@@ -34,14 +34,20 @@
                       <p></p>
                       <input type="file" id="file" ref="file" v-on:change="onJDupload()" />
                     </div>
-                    <div class="text-center">
-                      <base-button
-                        type="success"
-                        nativeType="submit"
-                        class="my-4 mx-2"
-                        @click="onSubmitJD()"
-                        disabled
-                      >Submit JD</base-button>
+                    <div class="vld-parent">
+                      <loading
+                        :active.sync="isLoading"
+                        :can-cancel="false"
+                        :is-full-page="fullPage"
+                      ></loading>
+                      <div class="text-center">
+                        <base-button
+                          type="success"
+                          nativeType="submit"
+                          class="my-4 mx-2"
+                          @click="onSubmitJD()"
+                        >Submit JD</base-button>
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -83,7 +89,7 @@
                       <base-input
                         v-model="vacancy"
                         alternative
-                        label="Vacancies"
+                        label="Vacancies (keep 0, if not to be specified)"
                         placeholder="e.g 3400"
                         input-classes="form-control-alternative"
                       />
@@ -94,8 +100,8 @@
                       <base-input
                         v-model="salary"
                         alternative
-                        label="Salary"
-                        placeholder="e.g $5000"
+                        label="Salary (keep empty, if not to be specified)"
+                        placeholder="eg. 6 to 7 LPA"
                         input-classes="form-control-alternative"
                       />
                     </div>
@@ -115,25 +121,24 @@
                     </div>
                   </div>
                   <div class="row">
-                    <div class="col-md-6">
-                      <base-input
-                        v-model="domain"
-                        alternative
-                        label="Domain"
-                        placeholder="e.g IT"
-                        input-classes="form-control-alternative"
-                      />
+                    <span style="font-size:0.875rem;font-weight: bold;" class="col-12">Domain</span>
+                    <br />
+                    <div class="col-md-12">
+                      <b-form-select v-model="domain" :options="options"></b-form-select>
                     </div>
+                  </div>
+                  <br />
+                  <div class="row">
                     <div class="col-md-3">
-                      <h4> Activation Options</h4>
+                      <h4>Activation Options</h4>
                       <b-form-radio v-model="picked" name="radios" value="false">Draft Only</b-form-radio>
                       <b-form-radio v-model="picked" name="radios" value="true">Activate</b-form-radio>
                     </div>
                     <div class="col-md-3">
-                      <h4> Job Type</h4>
-                      <b-form-radio v-model="jytpe" name="radio" value="false">Part-Time</b-form-radio>
-                      <b-form-radio v-model="jtype" name="radio" value="true">Full-Time</b-form-radio>
-                      <b-form-radio v-model="jtype" name="radio" value="false">Internship</b-form-radio>
+                      <h4>Job Type</h4>
+                      <b-form-radio v-model="job_type" name="radio" value="Part-Time">Part-Time</b-form-radio>
+                      <b-form-radio v-model="job_type" name="radio" value="Full-Time">Full-Time</b-form-radio>
+                      <b-form-radio v-model="job_type" name="radio" value="Internship">Internship</b-form-radio>
                     </div>
                   </div>
                 </div>
@@ -143,7 +148,7 @@
                 <div class="pl-lg-4">
                   <div class="row">
                     <div class="col-md-12">
-                      <vue-editor v-model="content" value="Hi, bhenchod"></vue-editor>
+                      <vue-editor v-model="content" value></vue-editor>
                     </div>
                   </div>
                 </div>
@@ -160,6 +165,12 @@
                     </div>
                   </div>
                 </div>
+                <div v-if="errors.length" class="text-center mt-4">
+                  <b>Please correct the following error(s):</b>
+                  <ul>
+                    <li class="text-red" v-for="error in errors" :key="error.id">{{ error }}</li>
+                  </ul>
+                </div>
               </form>
             </template>
           </card>
@@ -173,35 +184,116 @@ import { VueEditor } from "vue2-editor";
 import Datepicker from "vuejs-datepicker";
 import flatPicker from "vue-flatpickr-component";
 import "flatpickr/dist/flatpickr.css";
+import Loading from "vue-loading-overlay";
+import "vue-loading-overlay/dist/vue-loading.css";
 export default {
   components: {
     VueEditor,
     Datepicker,
-    flatPicker
+    flatPicker,
+    Loading
   },
 
   data() {
     return {
+      isLoading: false,
+      fullPage: true,
       errors: [],
+      job_type: "Full-Time",
       content: "",
+      domain: "",
+      options: [
+        { value: null, text: "Please select an option" },
+        {
+          value: "Agriculture, Food and Natural Resources",
+          text: "Agriculture, Food and Natural Resources"
+        },
+        {
+          value: "Architecture and Construction",
+          text: "Architecture and Construction"
+        },
+        {
+          value: "Arts, Audio/Video Technology and Communications",
+          text: "Arts, Audio/Video Technology and Communications"
+        },
+        {
+          value: "Business Management and Administration",
+          text: "Business Management and Administration"
+        },
+        { value: "Education and Training", text: "Education and Training" },
+        { value: "Finance", text: "Finance" },
+        {
+          value: "Government and Public Administration",
+          text: "Government and Public Administration"
+        },
+        { value: "Health Science", text: "Health Science" },
+        { value: "Hospitality and Tourism", text: "Hospitality and Tourism" },
+        { value: "Human Services", text: "Human Services" },
+        { value: "Information Technology", text: "Information Technology" },
+        {
+          value: "Law, Public Safety, Corrections and Security",
+          text: "Law, Public Safety, Corrections and Security"
+        },
+        { value: "Manufacturing", text: "Manufacturing" },
+        {
+          value: "Marketing, Sales and Service",
+          text: "Marketing, Sales and Service"
+        },
+        {
+          value: "Science, Technology, Engineering and Mathematics",
+          text: "Science, Technology, Engineering and Mathematics"
+        },
+        {
+          value: "Transportation, Distribution and Logistics",
+          text: "Transportation, Distribution and Logistics"
+        }
+      ],
       deadline: "",
       email: "",
-      vacancy: "",
-      salary: "",
+      vacancy: 0,
+      salary: null,
       jobtitle: "",
       location: "",
       picked: "true",
-      jtype:"true",
       jd: "",
-      skills: "nothing for now"
+      skills: ""
     };
   },
   methods: {
+    doAjax() {
+      this.isLoading = true;
+      setTimeout(() => {
+        this.isLoading = false;
+      }, 5000);
+    },
+
     onJDupload() {
       this.jd = this.$refs.file.files[0];
       // console.log("zala ka upload",  this.$refs.file.files)
     },
-    onSubmitJD() {},
+    onSubmitJD() {
+      if (this.addedJD()) {
+        this.isLoading = true;
+        const fd = new FormData();
+        fd.append("jd", this.jd);
+        this.$store
+          .dispatch("EXTRACTJD", fd)
+          .then(success => {
+            this.isLoading = false;
+            this.content = success.data.job_summary;
+            this.vacancy = success.data.total_vacancy;
+            this.location = success.data.location;
+            this.salary = success.data.salary;
+            this.deadline = success.data.deadline;
+            this.skills = success.data.skills.join(",");
+          })
+          .catch(error => {
+            this.isLoading = false;
+            console.log(error.data);
+            this.errors.push(error.data);
+          });
+      }
+    },
     uploadJob() {
       this.errors = [];
 
@@ -218,12 +310,14 @@ export default {
         fd.append("summary", this.content);
         fd.append("status", true);
         fd.append("activate", this.picked);
+        fd.append("job_type", this.job_type);
+        fd.append("domain", this.domain);
         // console.log(fd);
 
         this.$store
           .dispatch("JOBCREATE", fd)
           .then(success => {
-            var msg = "successfuly changed changes";
+            var msg = "successfuly saved changes";
             this.$swal(msg, "Thank You!", "success");
             this.$router.push("/recruiter");
           })
@@ -233,7 +327,25 @@ export default {
           });
       }
     },
+    addedJD() {
+      if (!this.jd) {
+        alert("insert JD first");
+        return false;
+      }
+      return true;
+    },
     valid() {
+      if (!this.jobtitle) {
+        this.errros.push("Job Title cannot be empty");
+      }
+      if (!this.location) {
+        this.errors.push(
+          "Location must be specified. If WFH, specify Work from Home"
+        );
+      }
+      if (!this.domain) {
+        this.errors.push("Domain of work must be entered");
+      }
       if (!this.errors.length) {
         return true;
       } else {
