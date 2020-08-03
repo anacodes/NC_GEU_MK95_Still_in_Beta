@@ -53,7 +53,7 @@ def recruiter_jd(instance, filename):
 
 class JobCreation(models.Model):
     jobid = models.BigAutoField(primary_key=True)
-    skills = models.CharField(max_length=255)
+    skills = models.TextField()
     email_id = models.EmailField(max_length=255)
     job_title = models.CharField(max_length=100)
     location = models.CharField(max_length=100)

@@ -2,16 +2,18 @@ from django.shortcuts import render, get_object_or_404
 from rest_framework import generics, status, permissions
 from rest_framework.response import Response
 from authentication.models import UserProfile
-from applicants.models import JobApplied
+from applicants.models import JobApplied, Applicant
 from . import models, serializers, utils
 from .permission import IsRecruiter, IsOwner, IsSameCompany, IsActive, IsStatus
 from rest_framework.parsers import MultiPartParser, FormParser
 from . import code
 from apiclient.discovery import build
 from google_auth_oauthlib.flow import InstalledAppFlow
+from . import Recommendation
 import pickle
 scopes = ['https://www.googleapis.com/auth/calendar']
 import datetime
+from django_cron import CronJobBase, Schedule
 # Create your views here.
 
 
@@ -298,6 +300,31 @@ class GoogleCalenderSetAPIView(generics.GenericAPIView):
             }
             utils.Util.send_email(data)
             return Response({'success': 'ok'}, status=status.HTTP_200_OK)
-        except expression as identifier:
+        except:
             return Response({'error': 'failed'},
                             status=status.HTTP_401_UNAUTHORIZED)
+
+
+class MyCronJob(CronJobBase):
+    RUN_EVERY_MINS = 5
+    RUN_AT_TIMES = ['00:00']
+
+    schedule = Schedule(run_every_mins=RUN_EVERY_MINS,
+                        run_at_times=RUN_AT_TIMES)
+    code = 'recruiter.my_cron_job'  # a unique code
+
+    def do(self):
+        job = models.JobCreation.objects.filter(activate=True).filter(
+            status=True)
+        applicant = Applicant.objects.all()
+        app_skills = []
+        job_skills = []
+        for x in applicant:
+            app_skills.append(x.key_skills)
+        print()
+        for x in job:
+            print(x.job_title, end=" ")
+            job_skills.append(x.skills)
+        print()
+        choice = Recommendation.Recommendation(app_skills, job_skills)
+        print(choice)
