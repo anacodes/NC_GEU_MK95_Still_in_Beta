@@ -8,3 +8,5 @@ pip install pdfminer
 pip install docx
 pip install python-docx
 pip install summa
+pip install sklearn
+pip install pandas
