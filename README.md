@@ -56,4 +56,9 @@ Project work in fulfillment of Problem Statement : MK95 (Smart Job Application p
  * Created Recommendation system for recommending jobs to jobseekers base on skills.
  * Modal and Alerts added.
  * Updated Home Page with job categories.
+#### Progress (3 pm)
+ * Updated settings.py on backend
+ * Google API requirement added.
+ * Salary Extraction integrated with backend.
+ * Recommendation system now active (Recommendation Mails will be auto sent to jobseekrs at 12 midnight everyday)
 
