@@ -50,4 +50,10 @@ Project work in fulfillment of Problem Statement : MK95 (Smart Job Application p
  * Added important actions.js for integration of backend and frontend.
  * Added ExtractJD API to Backend.
  * Updated Job Views.
+### Day 3 : 
+#### Progress (11 am)
+ * All Layouts added.
+ * Created Recommendation system for recommending jobs to jobseekers base on skills.
+ * Modal and Alerts added.
+ * Updated Home Page with job categories.
 
